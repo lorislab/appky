@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- IMAGE DIALOG -->
+    <p:dialog  header="#{commonMsg['common.upload.image.title']}" widgetVar="#{dialog_id}" resizable="false"  
+               width="550" modal="true">  
+        <h:form id="#{dialog_id}Form" enctype="multipart/form-data">
+            <div align="center">
+                <h:panelGrid id="createImageDialogPanel" columns="1" cellpadding="4">                 
+
+                    <ui:param name="noimage" value="#{empty imageVC.document.content.bytes}" />
+                    
+                    <p:graphicImage value="/rest/admin/dialog/image" rendered="#{!noimage}" 
+                                    width="#{imageVC.width > 260 ? 260 : imageVC.width}" 
+                                    height="#{imageVC.height > 260 ? 260 : imageVC.height}"/>
+                    <h:graphicImage name="img/noimage.png" 
+                                    rendered="#{noimage}"  
+                                    width="#{imageVC.width > 260 ? 260 : imageVC.width}" 
+                                    height="#{imageVC.height > 260 ? 260 : imageVC.height}"/>                
+                </h:panelGrid> 
+            </div>
+            <div style="float: left;">
+                <div style="float: right; padding-top: 10px;">
+                    <p:ajaxStatus>
+                        <f:facet name="start">
+                            <p:graphicImage value="/images/ajax-file-upload.gif" />
+                        </f:facet>
+
+                        <f:facet name="complete">
+                            <h:outputText value="" />
+                        </f:facet>
+                    </p:ajaxStatus> 
+                </div>
+                <p:fileUpload fileUploadListener="#{imageVC.uploadEvent}"  
+                              rendered="#{imageVC.uploadAction.available}"
+                              disabled="#{!imageVC.uploadAction.enabled}"
+                              mode="advanced"  
+                              update="#{dialog_id}Form:createImageDialogPanel #{dialog_id}Form:imageDialogSaveButton"
+                              auto="true" 
+                              sizeLimit="10000000"  
+                              label="#{commonMsg['common.upload.image.action.choose.value']}"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/">                  
+                </p:fileUpload>
+            </div>
+            <div style="float: right;">
+                <p:commandButton id="imageDialogSaveButton" 
+                                 icon="icon-button-ok" 
+                                 rendered="#{imageVC.acceptAction.available}"
+                                 disabled="#{!imageVC.acceptAction.enabled}"
+                                 value="#{commonMsg['common.upload.image.action.accept.value']}"
+                                 title="#{commonMsg['common.upload.image.action.accept.title']}"
+                                 actionListener="#{parentImageVC.updateImage(imageVC.type, imageVC.guid, imageVC.document)}" 
+                                 update="#{dialog_onsave_update}"
+                                 oncomplete="#{dialog_id}.hide()" />
+                <p:commandButton id="imageDialogCloseButton" 
+                                 value="#{commonMsg['common.upload.image.action.cancel.value']}"
+                                 title="#{commonMsg['common.upload.image.action.cancel.title']}"
+                                 rendered="#{imageVC.cancelAction.available}"
+                                 disabled="#{!imageVC.cancelAction.enabled}"
+                                 icon="icon-button-cancel" 
+                                 onclick="#{dialog_id}.hide()" />
+            </div>
+
+        </h:form>    
+    </p:dialog> 
+
+</ui:composition>

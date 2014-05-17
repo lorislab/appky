@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:mstore="http://java.sun.com/jsf/composite/components">
+
+    <h:form id="formPlatform">
+        <h:panelGrid id="platformPanel" columns="2" cellpadding="4">    
+
+            <h:outputText value="#{appMsg['platform.icon.value']}"
+                          title="#{appMsg['platform.icon.title']}"/>
+            <h:graphicImage value="/rest/admin/platform/image/#{platformVC.model.icon.guid}?path=/resources/img/noicon.png">
+                <p:ajax event="click" oncomplete="imageDialog.show()" update=":imageDialogForm:createImageDialogPanel"
+                        listener="#{imageVC.open('ICON', platformVC.model.icon, 72, 72)}" />                    
+            </h:graphicImage>          
+
+            <h:outputText value="#{appMsg['platform.enabled.value']}" 
+                          title="#{appMsg['platform.enabled.title']}"/> 
+            <p:selectBooleanButton value="#{platformVC.model.enabled}" 
+                                   onLabel="#{commonMsg['common.switch.on']}" 
+                                   offLabel="#{commonMsg['common.switch.off']}"                                     
+                                   onIcon="icon-enabled-true" 
+                                   offIcon="icon-enabled-false"  />
+
+            <h:outputText value="#{appMsg['platform.description.value']}"
+                          title="#{appMsg['platform.description.title']}"/> 
+            <mstore:description id="platformDescriptionPanel" 
+                                descriptionVC="#{platformVC.descriptionVC}" 
+                                buttonTitle="#{appMsg['platform.description.button.title']}"
+                                update=":formPlatform:platformDescriptionPanel:panelGroup" />
+
+            <h:outputText value="#{appMsg['platform.images.value']}"
+                          title="#{appMsg['platform.images.title']}"/>
+
+            <p:dataGrid id="platformPanelImages"
+                        var="item" value="#{platformVC.model.images}" columns="3"
+                        rowIndexVar="itemIndex"
+                        rows="3" paginator="true"  
+                        paginatorPosition="bottom"
+                        paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}">  
+
+                <f:facet name="header">
+                    <div align="left">                         
+                        <p:commandButton icon="icon-button-add" 
+                                         oncomplete="imageDialog.show()" 
+                                         title="#{appMsg['platform.action.addImage.title']}"
+                                         update=":imageDialogForm:createImageDialogPanel"
+                                         actionListener="#{imageVC.create('IMAGE', 512, 512)}"/> 
+                    </div>
+                </f:facet>
+
+                <h:panelGrid columns="1" style="width:100%">  
+                    <p:graphicImage value="/rest/admin/platform/image/#{item.guid}" width="200" height="200" />   
+                    <h:panelGroup>
+                        <p:commandButton icon="icon-button-prev" 
+                                         title="#{appMsg['platform.action.prevImage.title']}"
+                                         actionListener="#{platformVC.prevImage(item.guid, itemIndex)}"
+                                         update=":formPlatform:platformPanelImages"/>
+                        <p:commandButton icon="icon-button-next" 
+                                         title="#{appMsg['platform.action.nextImage.title']}"
+                                         actionListener="#{platformVC.nextImage(item.guid, itemIndex)}"
+                                         update=":formPlatform:platformPanelImages"/>                    
+                        <p:commandButton icon="icon-button-delete" 
+                                         title="#{appMsg['platform.action.deleteImage.title']}"
+                                         actionListener="#{platformVC.deleteImage('IMAGE', item.guid)}"
+                                         update=":formPlatform:platformPanelImages"/>  
+                    </h:panelGroup>
+                </h:panelGrid>  
+
+
+            </p:dataGrid>
+
+
+            <h:outputText value="#{appMsg['platform.manifestIOS.value']}"
+                          title="#{appMsg['platform.manifestIOS.title']}"
+                          rendered="#{not empty platformVC.model.manifest}"/>             
+            <p:panel id="platformManifestIOSPanel" rendered="#{not empty platformVC.model.manifest}">  
+                <h:panelGrid id="iosManifestPanel" columns="2" cellpadding="4" > 
+                    <h:outputText value="#{appMsg['platform.manifestIOS.identifier.value']}"
+                                  title="#{appMsg['platform.manifestIOS.identifier.title']}"/>
+                    <p:inputText value="#{platformVC.model.manifest.identifier}" size="50"
+                                 title="#{appMsg['platform.manifestIOS.identifier.title']}"/> 
+
+                    <h:outputText value="#{appMsg['platform.manifestIOS.title.value']}"
+                                  title="#{appMsg['platform.manifestIOS.title.title']}"/>
+                    <p:inputText value="#{platformVC.model.manifest.title}" size="50"
+                                 title="#{appMsg['platform.manifestIOS.title.title']}"/> 
+
+                    <h:outputText value="#{appMsg['platform.manifestIOS.subtitle.value']}"
+                                  title="#{appMsg['platform.manifestIOS.subtitle.title']}"/>
+                    <p:inputText value="#{platformVC.model.manifest.subtitle}" size="50"
+                                 title="#{appMsg['platform.manifestIOS.subtitle.title']}"/>  
+
+                    <h:outputText value="#{appMsg['platform.manifestIOS.smallIconShine.value']}"
+                                  title="#{appMsg['platform.manifestIOS.smallIconShine.title']}"/>
+                    <p:selectBooleanCheckbox value="#{platformVC.model.manifest.iconShine}"/>  
+
+                    <h:outputText value="#{appMsg['platform.manifestIOS.smallIcon.value']}"
+                                  title="#{appMsg['platform.manifestIOS.smallIcon.title']}"/>
+                    <h:graphicImage value="/rest/admin/platform/image/#{platformVC.model.manifest.smallIcon.guid}?path=/resources/img/noicon.png" 
+                                    title="#{appMsg['platform.manifestIOS.smallIcon.title']}" >
+                        <p:ajax event="click" oncomplete="imageDialog.show()" update=":imageDialogForm:createImageDialogPanel"
+                                listener="#{imageVC.open('CUSTOM1', platformVC.model.manifest.smallIcon, 72, 72)}" />                                                                                    
+                    </h:graphicImage>                            
+
+                    <h:outputText value="#{appMsg['platform.manifestIOS.largeIconShine.value']}"
+                                  title="#{appMsg['platform.manifestIOS.largeIconShine.title']}"/>
+                    <p:selectBooleanCheckbox value="#{platformVC.model.manifest.largeIconShine}"/>  
+
+                    <h:outputText value="#{appMsg['platform.manifestIOS.largeIcon.value']}"
+                                  title="#{appMsg['platform.manifestIOS.largeIcon.title']}"/>
+                    <h:graphicImage value="/rest/admin/platform/image/#{platformVC.model.manifest.largeIcon.guid}?path=/resources/img/noicon.png" 
+                                    title="#{appMsg['platform.manifestIOS.largeIcon.title']}" >
+                        <p:ajax event="click" oncomplete="imageDialog.show()" update=":imageDialogForm:createImageDialogPanel"
+                                listener="#{imageVC.open('CUSTOM2', platformVC.model.manifest.largeIcon, 150, 150)}" />                                                        
+                    </h:graphicImage>
+                </h:panelGrid>    
+            </p:panel>
+
+        </h:panelGrid>
+
+        <br/>
+
+        <div align="right">          
+            <p:commandButton id="platformSaveButton" 
+                             value="#{appMsg['platform.action.save.value']}"
+                             title="#{appMsg['platform.action.save.title']}"
+                             icon="icon-button-save" 
+                             rendered="#{platformVC.saveAction.available}"
+                             disabled="#{!platformVC.saveAction.enabled}"
+                             actionListener="#{platformVC.saveAction.execute}"/>
+        </div>        
+    </h:form> 
+
+    <!-- IMAGE DIALOG -->
+    <ui:include src="dialog/image.xhtml">
+        <ui:param name="dialog_id" value="imageDialog"/>
+        <ui:param name="parentImageVC" value="#{platformVC}" />
+        <ui:param name="dialog_onsave_update" value=":formPlatform" />
+    </ui:include>
+
+</ui:composition>

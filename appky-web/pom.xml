@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    
+	<parent>
+		<groupId>org.lorislab.appky</groupId>
+		<artifactId>appky</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+		
+	<artifactId>appky-web</artifactId>
+	<packaging>war</packaging>    
+	<name>appky-web</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-application</artifactId>
+			<type>ejb-client</type>
+			<scope>provided</scope>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-config</artifactId>
+			<type>ejb-client</type>
+			<scope>provided</scope>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-email</artifactId>
+			<type>ejb-client</type>
+			<scope>provided</scope>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-tracking</artifactId>
+			<type>ejb-client</type>
+			<scope>provided</scope>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-process</artifactId>
+			<type>ejb-client</type>
+			<scope>provided</scope>
+			<version>${project.version}</version>
+		</dependency>
+				
+		<!-- JEL -->
+		<dependency>
+			<groupId>org.lorislab.jel</groupId>
+			<artifactId>jel-jsf</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jel-jpa</artifactId>
+					<groupId>org.lorislab.jel</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jel-base</artifactId>
+					<groupId>org.lorislab.jel</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jel-log</artifactId>
+					<groupId>org.lorislab.jel</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- EJB -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+				
+		<dependency>
+			<groupId>org.jboss.spec.javax.ws.rs</groupId>
+			<artifactId>jboss-jaxrs-api_1.1_spec</artifactId>	
+			<scope>provided</scope>
+		</dependency>
+		<!-- CDI -->
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency> 
+		
+		<!-- SERVLET -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_3.0_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- JSF -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+				
+		<!-- PRIMEFACES -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+		</dependency>
+					
+		<!-- File Upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		
+		<!-- META-INF SERVICES -->
+		<dependency>
+			<groupId>org.kohsuke.metainf-services</groupId>
+			<artifactId>metainf-services</artifactId>
+			<optional>true</optional>
+		</dependency>			
+	</dependencies>  
+    
+</project>

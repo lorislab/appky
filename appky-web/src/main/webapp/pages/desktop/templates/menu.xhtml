@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="menuForm">          
+            <p:menubar>
+                <p:menuitem value="Home" 
+                            title="The main page"
+                            disabled="#{!menuVC.homeAction.enabled}"
+                            rendered="#{menuVC.homeAction.available}"
+                            action="#{menuVC.homeAction.execute}"                             
+                            ajax="false" 
+                            icon="icon-menu-home"
+                            actionListener="#{menuVC.setActiveIndex(0)}"
+                            styleClass="#{menuVC.activeIndex == 0 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/> 
+                <p:menuitem value="Applications" 
+                            title="Applications"
+                            disabled="#{!menuVC.applicationAction.enabled}"
+                            rendered="#{menuVC.applicationAction.available}"
+                            action="#{menuVC.applicationAction.execute}"                            
+                            ajax="false" 
+                            icon="icon-menu-application"
+                            actionListener="#{menuVC.setActiveIndex(1)}"
+                            styleClass="#{menuVC.activeIndex == 1 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/> 
+                <p:menuitem value="#{usersMsg['users.value']}" 
+                            title="#{usersMsg['users.title']}"
+                            disabled="#{!menuVC.usersAction.enabled}"
+                            rendered="#{menuVC.usersAction.available}"
+                            action="#{menuVC.usersAction.execute}"                            
+                            ajax="false" 
+                            icon="icon-menu-users"
+                            actionListener="#{menuVC.setActiveIndex(2)}"
+                            styleClass="#{menuVC.activeIndex == 2 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/>
+                <p:menuitem value="#{rolesMsg['roles.value']}" 
+                            title="#{rolesMsg['roles.title']}"
+                            disabled="#{!menuVC.rolesAction.enabled}"
+                            rendered="#{menuVC.rolesAction.available}"
+                            action="#{menuVC.rolesAction.execute}"                            
+                            ajax="false" 
+                            icon="icon-menu-roles"
+                            actionListener="#{menuVC.setActiveIndex(7)}"
+                            styleClass="#{menuVC.activeIndex == 7 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/>                
+                <p:menuitem value="#{statisticsMsg['statistics.value']}" 
+                            title="#{statisticsMsg['statistics.title']}"
+                            disabled="#{!menuVC.statisticsAction.enabled}"
+                            rendered="#{menuVC.statisticsAction.available}"
+                            action="#{menuVC.statisticsAction.execute}"                             
+                            ajax="false" 
+                            icon="icon-menu-statistics"
+                            actionListener="#{menuVC.setActiveIndex(3)}"
+                            styleClass="#{menuVC.activeIndex == 3 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/>  
+                <p:menuitem value="#{preferencesMsg['preferences.value']}" 
+                            title="#{preferencesMsg['preferences.title']}"
+                            disabled="#{!menuVC.preferencesAction.enabled}"
+                            rendered="#{menuVC.preferencesAction.available}"
+                            action="#{menuVC.preferencesAction.execute}"                            
+                            ajax="false" 
+                            icon="icon-menu-preferences"
+                            actionListener="#{menuVC.setActiveIndex(4)}"
+                            styleClass="#{menuVC.activeIndex == 4 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/>
+                <p:menuitem value="#{invitationMsg['invitation.value']}" 
+                            title="#{invitationMsg['invitation.title']}"
+                            disabled="#{!menuVC.invitationAction.enabled}"
+                            rendered="#{menuVC.invitationAction.available}"
+                            action="#{menuVC.invitationAction.execute}"
+                            ajax="false" 
+                            icon="icon-menu-invitation" 
+                            actionListener="#{menuVC.setActiveIndex(5)}"
+                            styleClass="#{menuVC.activeIndex == 5 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/>
+                <p:menuitem value="#{profileMsg['profile.value']}" 
+                            title="#{profileMsg['profile.title']}" 
+                            disabled="#{!menuVC.profileAction.enabled}"
+                            rendered="#{menuVC.profileAction.available}"
+                            action="#{menuVC.profileAction.execute}"
+                            ajax="false"                                     
+                            icon="icon-menu-profile"                                     
+                            actionListener="#{menuVC.setActiveIndex(6)}"
+                            styleClass="#{menuVC.activeIndex == 6 ? 'ui-state-active' : ''}"
+                            update=":menuForm"/>
+                <f:facet name="options">
+                    <p:commandButton value="#{loginMsg['login.panel.action.logout.value']}" 
+                                     title="#{loginMsg['login.panel.action.logout.title']}" 
+                                     ajax="false"                                     
+                                     icon="icon-menu-logout"                                  
+                                     action="#{loginVC.logoutAction.execute}"/>                 
+                </f:facet>
+            </p:menubar>
+    </h:form>
+
+</ui:composition>
+

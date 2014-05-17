@@ -1,0 +1,5 @@
+<beans>
+   <interceptors>
+      <class>com.ajkaandrej.interceptors.web.FacesInterceptor</class>
+   </interceptors>
+</beans>

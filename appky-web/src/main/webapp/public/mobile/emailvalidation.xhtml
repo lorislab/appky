@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:pm="http://primefaces.org/mobile"
+        xmlns:p="http://primefaces.org/ui"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="My application store">
+
+        <pm:view id="emailvalidation">
+
+            <f:metadata>  
+                <f:viewParam name="guid" value="#{emailValidationVC.guid}"/> 	
+                <f:viewParam name="action" value="#{emailValidationVC.action}"/>                
+                <f:event type="preRenderView" listener="#{emailValidationVC.validationEmailAction}"></f:event>  
+            </f:metadata> 
+
+            <pm:header title="Email validation">
+                <f:facet name="left">
+                    <p:button value="Back" icon="back" href="/"/>
+                </f:facet>                
+            </pm:header>
+
+            <pm:content>
+                <h:outputLabel rendered="#{emailValidationVC.result}" value="OK" />
+                <h:outputLabel rendered="#{!emailValidationVC.result}" value="FAILED" />       
+            </pm:content>        
+        </pm:view>
+
+    </pm:page>
+
+</f:view>

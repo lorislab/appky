@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dataTable var="user" value="#{userTableVC.result}" id="usersTable"
+                 rowKey="#{user.guid}"  
+                 selectionMode="single"
+                 paginatorAlwaysVisible="true"
+                 rows="10"
+                 paginator="true"
+                 paginatorPosition="bottom"
+                 paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"                 
+                 > 
+
+        <p:ajax event="rowSelect" listener="#{userVC.onRowSelect}" update=":userForm:userPanel"/>
+
+        <f:facet name="header">
+            <div align="left">                         
+                <p:commandButton icon="icon-button-refresh" 
+                                 update=":usersTable" 
+                                 title="#{usersMsg['users.action.refresh.title']}"
+                                 rendered="#{userTableVC.searchAction.available}"
+                                 disabled="#{!userTableVC.searchAction.enabled}"
+                                 actionListener="#{userTableVC.searchAction.execute}"/>   
+            </div>
+        </f:facet>
+
+        <p:column headerText="#{usersMsg['users.table.firstName.value']}"> 
+            <h:outputText value="#{user.firstName}" title="#{user.guid}" />  
+        </p:column>
+        <p:column headerText="#{usersMsg['users.table.middleName.value']}"> 
+            <h:outputText value="#{user.middleName}" />  
+        </p:column>               
+        <p:column headerText="#{usersMsg['users.table.lastName.value']}"> 
+            <h:outputText value="#{user.lastName}" />  
+        </p:column>          
+        <p:column headerText="#{usersMsg['users.table.email.value']}"> 
+            <h:outputText value="#{user.email}" />  
+        </p:column>
+        <p:column headerText="#{usersMsg['users.table.enabled.value']}">
+            <div align="center">
+                <h:outputText styleClass="ui-icon icon-enabled-true" rendered="#{user.enabled}" />
+                <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{!user.enabled}" />
+            </div>
+        </p:column>
+        <p:column headerText="#{usersMsg['users.table.locale.value']}"> 
+            <h:outputText value="#{user.locale}" converter="#{localeConverter}"/>  
+        </p:column>        
+    </p:dataTable>
+
+    <br/>
+
+    <h:form id="userForm">        
+        <p:panel id="userPanel">
+            <ui:param name="panelDisabled" value="#{!userVC.saveAction.enabled}"/>
+            <h:panelGrid id="userPanelGrid" columns="2" cellpadding="4">
+
+                <h:outputText value="#{usersMsg['users.panel.firstName.value']}"
+                              title="#{usersMsg['users.panel.firstName.title']}"/>
+                <p:inputText value="#{userVC.model.firstName}" 
+                             size="50" maxlength="50"
+                             disabled="#{panelDisabled}"
+                             title="#{usersMsg['users.panel.firstName.title']}"/>
+
+                <h:outputText value="#{usersMsg['users.panel.middleName.value']}"
+                              title="#{usersMsg['users.panel.middleName.title']}"/>
+                <p:inputText value="#{userVC.model.middleName}" 
+                             size="50" maxlength="50"
+                             disabled="#{panelDisabled}"
+                             title="#{usersMsg['users.panel.middleName.title']}"/>
+
+                <h:outputText value="#{usersMsg['users.panel.lastName.value']}"
+                              title="#{usersMsg['users.panel.lastName.title']}"/>
+                <p:inputText value="#{userVC.model.lastName}" 
+                             size="50" maxlength="50"
+                             disabled="#{panelDisabled}"
+                             title="#{usersMsg['users.panel.lastName.title']}"/>
+
+                <h:outputText value="#{usersMsg['users.panel.email.value']}"
+                              title="#{usersMsg['users.panel.email.title']}"/>
+                <p:inputText value="#{userVC.model.email}" 
+                             size="50" maxlength="50"
+                             disabled="#{panelDisabled}"
+                             title="#{usersMsg['users.panel.email.title']}"/>
+                <h:outputText value="#{usersMsg['users.panel.enabled.value']}" 
+                              title="#{usersMsg['users.panel.enabled.title']}"/> 
+                <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{empty userVC.model}" />
+                <p:selectBooleanButton value="#{userVC.model.enabled}" 
+                                       disabled="#{panelDisabled}"
+                                       rendered="#{not empty userVC.model}"
+                                       onLabel="#{commonMsg['common.switch.on']}" 
+                                       offLabel="#{commonMsg['common.switch.off']}"                                     
+                                       onIcon="icon-enabled-true" 
+                                       offIcon="icon-enabled-false"  />                  
+            </h:panelGrid>
+
+            <br/>
+
+            <p:pickList id="userRoleList" value="#{userVC.userRoles}" var="role"
+                        showSourceFilter="true"
+                        showTargetFilter="true"
+                        converter="#{roleConverter}"
+                        itemLabel="#{role.id}" 
+                        itemValue="#{role}" 
+                        itemDisabled="#{role.deleted}"
+                        disabled="#{panelDisabled}"
+                        addLabel="#{commonMsg['common.roles.add']}"
+                        addAllLabel="#{commonMsg['common.roles.addAll']}"
+                        removeLabel="#{commonMsg['common.roles.remove']}"
+                        removeAllLabel="#{commonMsg['common.roles.removeAll']}"   
+                        >
+                <f:facet name="sourceCaption">#{commonMsg['common.roles.available']}</f:facet>  
+                <f:facet name="targetCaption">#{commonMsg['common.roles.current']}</f:facet>
+            </p:pickList>
+            <br/>
+            <div align="right">
+                <p:commandButton id="userResetPasswordButton" 
+                                 value="#{usersMsg['users.panel.action.resetPassword.value']}"
+                                 title="#{usersMsg['users.panel.action.resetPassword.title']}"
+                                 icon="icon-button-password" 
+                                 rendered="#{userVC.saveAction.available}"
+                                 disabled="#{!userVC.saveAction.enabled}"
+                                 oncomplete="userResetPasswordDialog.show()"/>   
+
+                <p:commandButton id="userCreateButton" 
+                                 value="#{usersMsg['users.panel.action.create.value']}"
+                                 title="#{usersMsg['users.panel.action.create.title']}"
+                                 icon="icon-button-create" 
+                                 update=":userForm:userPanel" 
+                                 rendered="#{userVC.createAction.available}"
+                                 disabled="#{!userVC.createAction.enabled}"
+                                 actionListener="#{userVC.createAction.execute}"/>  
+
+                <p:commandButton id="userDeleteButton" 
+                                 value="#{usersMsg['users.panel.action.delete.value']}"
+                                 title="#{usersMsg['users.panel.action.delete.title']}"
+                                 icon="icon-button-delete" 
+                                 update=":userForm:userPanel :usersTable" 
+                                 rendered="#{userVC.deleteAction.available}"
+                                 disabled="#{!userVC.deleteAction.enabled}"
+                                 actionListener="#{userVC.deleteAction.execute}"/>                
+
+                <p:commandButton id="userSaveButton" 
+                                 value="#{usersMsg['users.panel.action.save.value']}"
+                                 title="#{usersMsg['users.panel.action.save.title']}"
+                                 icon="icon-button-save" 
+                                 update=":userForm:userPanel :usersTable" 
+                                 rendered="#{userVC.saveAction.available}"
+                                 disabled="#{!userVC.saveAction.enabled}"
+                                 actionListener="#{userVC.saveAction.execute}"/>
+
+            </div> 
+        </p:panel>
+    </h:form>  
+
+    <!-- RESET PASSWORD DIALOG -->
+    <ui:include src="dialog/resetPassword.xhtml">
+    </ui:include>
+
+</ui:composition>

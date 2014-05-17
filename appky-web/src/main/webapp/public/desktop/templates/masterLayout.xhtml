@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>#{loginMsg['login.page.title']}</title>
+            </f:facet>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/default.css" />
+            <!-- HEAD -->
+            <ui:insert name="head"></ui:insert>
+        </h:head>
+
+        <h:body style="margin:150px 0px; padding:0px;text-align:center;">            
+            <!-- HEADER -->
+            <ui:insert name="headerArea" />
+            <!-- GROWL -->
+            <h:panelGroup layout="block">
+                <ui:insert name="errorMsgArea">
+                    <p:growl id="growl" showDetail="true" sticky="true" />				
+                </ui:insert>
+                <!-- CONTENT -->
+                <ui:insert name="contentArea" />
+            </h:panelGroup>          
+            <!-- FOOTER -->
+            <ui:insert name="footerArea" />
+        </h:body>
+    </f:view>
+</html>
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="sendInvitationForm">
+        <p:panel id="invitationPanel">
+            <h:panelGrid columns="3">
+                <h:outputText value="#{invitationMsg['invitation.email.value']}" 
+                              title="#{invitationMsg['invitation.email.title']}"/>
+                <p:inputText value="#{invitationVC.email}" id="email" size="40" 
+                             title="#{invitationMsg['invitation.email.title']}"
+                             validatorMessage="#{invitationMsg['invitation.email.validation']}">
+                    <p:ajax event="keyup" listener="#{invitationVC.checkEmail}" update="sendInvitationForm:createInvitationRequestButton"/>  
+                </p:inputText>
+                <p:message for="email" id="emailMessage" display="icon"/> 
+            </h:panelGrid>
+            <div align="right">
+                <p:commandButton id="createInvitationRequestButton" 
+                                 value="#{invitationMsg['invitation.action.send.value']}" 
+                                 title="#{invitationMsg['invitation.action.send.title']}"
+                                 icon="icon-button-send" 
+                                 update=":sendInvitationForm:invitationPanel"
+                                 rendered="#{invitationVC.sendAction.available}"
+                                 disabled="#{!invitationVC.sendAction.enabled}"
+                                 actionListener="#{invitationVC.sendAction.execute}" />            
+            </div>
+        </p:panel>
+    </h:form>        
+</ui:composition>

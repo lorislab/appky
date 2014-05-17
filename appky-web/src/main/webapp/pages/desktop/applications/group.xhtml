@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:mstore="http://java.sun.com/jsf/composite/components">
+
+
+    <h:form id="formGroup" >
+        <h:panelGrid id="groupPanel" columns="2" cellpadding="4">                
+
+            <h:outputText value="#{appMsg['group.name.value']}"
+                          title="#{appMsg['group.name.title']}"/>
+            <p:inputText value="#{groupVC.model.name}" size="50" maxlength="50"
+                         title="#{appMsg['group.name.title']}"/>  
+
+            <h:outputText value="#{appMsg['group.enabled.value']}"
+                          title="#{appMsg['group.enabled.title']}"/>                
+            <p:selectBooleanButton value="#{groupVC.model.enabled}" 
+                                   onLabel="#{commonMsg['common.switch.on']}" 
+                                   offLabel="#{commonMsg['common.switch.off']}"                                     
+                                   onIcon="icon-enabled-true" 
+                                   offIcon="icon-enabled-false"  />
+
+            <h:outputText value="#{appMsg['group.image.value']}"
+                          title="#{appMsg['group.image.title']}"/>
+            <h:graphicImage value="/rest/admin/group/icon?path=/resources/img/noicon.png" title="#{appMsg['group.image.title']}">                
+                <p:ajax event="click" oncomplete="iconDialog.show()" update=":iconDialogForm:createImageDialogPanel"
+                        listener="#{imageVC.open('ICON', groupVC.model.icon, 72, 72)}" />
+            </h:graphicImage>
+
+            <h:outputText value="#{appMsg['group.title.value']}"
+                          title="#{appMsg['group.title.title']}"/>                
+            <mstore:title id="groupTitlePanel" 
+                          descriptionVC="#{groupVC.titleVC}" 
+                          title="#{appMsg['group.title.title']}"
+                          buttonTitle="#{appMsg['group.title.button.title']}"
+                          update=":formGroup:groupTitlePanel:panelGroup" />
+
+
+
+            <h:outputText value="#{appMsg['group.description.value']}"
+                          title="#{appMsg['group.description.title']}"/>
+            <mstore:description id="groupDescriptionPanel" 
+                                controls="bold italic underline strikethrough"
+                                descriptionVC="#{groupVC.descriptionVC}" 
+                                buttonTitle="#{appMsg['group.description.button.title']}"
+                                update=":formGroup:groupDescriptionPanel:panelGroup" />
+
+            <h:outputText value="#{appMsg['group.roles.value']}"
+                          title="#{appMsg['group.roles.title']}"/>
+            <p:pickList id="groupRoleList" value="#{groupVC.groupRoles}" var="role"
+                        rendered="#{not empty groupVC.groupRoles}"
+                        showSourceFilter="true"
+                        showTargetFilter="true"                    
+                        addLabel="#{commonMsg['common.roles.add']}"
+                        addAllLabel="#{commonMsg['common.roles.addAll']}"
+                        removeLabel="#{commonMsg['common.roles.remove']}"
+                        removeAllLabel="#{commonMsg['common.roles.removeAll']}"                       
+                        converter="#{roleConverter}"
+                        itemLabel="#{role.id}" itemValue="#{role}" itemDisabled="#{role.deleted}">
+                <f:facet name="sourceCaption">#{commonMsg['common.roles.available']}</f:facet>  
+                <f:facet name="targetCaption">#{commonMsg['common.roles.current']}</f:facet>
+            </p:pickList>
+        </h:panelGrid> 
+        <br/>
+        <div align="right">
+            <p:commandButton id="groupAddAppButton" 
+                             value="#{appMsg['group.action.addApp.value']}" 
+                             title="#{appMsg['group.action.addApp.title']}" 
+                             icon="icon-group-app-add" 
+                             rendered="#{applicationPopUpVC.createAction.available}"
+                             onclick="createApplicationDialog.show()" 
+                             update=":groupsTreeForm:groupsTree" />                 
+            <p:commandButton id="groupDeleteButton" 
+                             value="#{appMsg['group.action.delete.value']}" 
+                             title="#{appMsg['group.action.delete.title']}" 
+                             icon="icon-button-delete" 
+                             rendered="#{groupVC.deleteAction.available}"
+                             disabled="#{!groupVC.deleteAction.enabled}"
+                             onclick="deleteGroupDialog.show()"
+                             update=":deleteGroupMessage"/>            
+            <p:commandButton id="groupSaveButton" 
+                             value="#{appMsg['group.action.save.value']}" 
+                             title="#{appMsg['group.action.save.title']}" 
+                             icon="icon-button-save" 
+                             rendered="#{groupVC.saveAction.available}"
+                             disabled="#{!groupVC.saveAction.enabled}"
+                             actionListener="#{groupVC.saveAction.execute}" 
+                             update=":groupsTreeForm:groupsTree" />
+        </div>
+    </h:form>
+
+    <!-- IMAGE DIALOG -->
+    <ui:include src="dialog/image.xhtml">
+        <ui:param name="dialog_id" value="iconDialog"/>
+        <ui:param name="parentImageVC" value="#{groupVC}" />
+        <ui:param name="dialog_onsave_update" value=":formGroup:groupPanel" />
+    </ui:include>    
+
+    <!-- DELETE GROUP DIALOG -->
+    <p:confirmDialog id="deleteGroupDialogId"
+                     message=""
+                     header="#{appMsg['group.delete.dialog.title']}" 
+                     widgetVar="deleteGroupDialog">  
+        <f:facet name="message">
+            <h:outputFormat id="deleteGroupMessage" value="#{appMsg['group.delete.dialog.message']}">
+                <f:param value="#{groupVC.model.name}" />
+            </h:outputFormat>
+        </f:facet>
+        <p:commandButton id="deleteGroupConfirm" 
+                         value="#{appMsg['group.delete.dialog.action.ok.value']}" 
+                         title="#{appMsg['group.delete.dialog.action.ok.title']}"
+                         oncomplete="deleteGroupDialog.hide()" 
+                         update=":groupsTreeForm:groupsTree :contentApplicationTabView"
+                         icon="icon-button-ok"
+                         rendered="#{groupVC.deleteAction.available}"
+                         disabled="#{!groupVC.deleteAction.enabled}"
+                         actionListener="#{groupVC.deleteAction.execute}" />  
+        <p:commandButton id="deleteGroupDecline" 
+                         value="#{appMsg['group.delete.dialog.action.cancel.value']}" 
+                         title="#{appMsg['group.delete.dialog.action.cancel.title']}" 
+                         icon="icon-button-cancel"
+                         onclick="deleteGroupDialog.hide()" 
+                         type="button" />   
+    </p:confirmDialog>
+
+    <!-- CREATE APPLICATION DIALOG -->
+    <p:dialog  header="#{appMsg['group.addApp.dialog.title']}" 
+               widgetVar="createApplicationDialog" 
+               resizable="false"  
+               width="300" 
+               id="createApplicationDialogId" 
+               modal="true">  
+        <h:form id="formCreateApplicationDialog" >
+            <h:panelGrid id="createApplicationDialogPanel" columns="3" cellpadding="4">                 
+
+                <h:outputText value="#{appMsg['group.addApp.dialog.name.value']}" 
+                              title="#{appMsg['group.addApp.dialog.name.title']}"/>  
+                <p:inputText id="createApplicationDialogInput" 
+                             value="#{applicationPopUpVC.name}" 
+                             size="27"
+                             title="#{appMsg['group.addApp.dialog.name.title']}">  
+                    <p:ajax event="keyup" update="addApplicationButton" />
+                </p:inputText>
+                <p:commandButton id="addApplicationButton"
+                                 icon="icon-button-ok" 
+                                 title="#{appMsg['group.addApp.dialog.action.ok.title']}"
+                                 update="createApplicationDialogInput addApplicationButton :groupsTreeForm:groupsTree"
+                                 rendered="#{applicationPopUpVC.createAction.available}"
+                                 disabled="#{!applicationPopUpVC.createAction.enabled}"
+                                 actionListener="#{applicationPopUpVC.createAction.execute}" 
+                                 oncomplete="createApplicationDialog.hide()" />
+            </h:panelGrid> 
+
+        </h:form>
+    </p:dialog>    
+</ui:composition>

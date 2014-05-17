@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:pm="http://primefaces.org/mobile"
+        xmlns:p="http://primefaces.org/ui"
+        contentType="text/html"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="#{loginMsg['login.page.title']}" >
+        <f:facet name="preinit">
+
+<!--            <c:if test="#{!userAgent.windows8}">
+                <link type="text/css" rel="stylesheet" href="#{request.contextPath}/javax.faces.resource/mobile.css.xhtml?ln=primefaces-mobile" title="mobile"/>
+            </c:if>
+            <c:if test="#{userAgent.windows8}">
+                <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/jquery.mobile.metro.theme.css" title="default"/>
+            </c:if>            -->
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/javax.faces.resource/mobile.css.xhtml?ln=primefaces-mobile" title="mobile"/>
+
+
+
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>#{loginMsg['login.page.title']}</title>
+        </f:facet>
+
+        <pm:view id="login" swatch="b">
+            <pm:header title="#{loginMsg['login.page.title']}">
+                <f:facet name="right">
+                    <p:button value="#{loginMsg['registration.panel.header']}" 
+                              icon="back" 
+                              href="#registration?transition=slide"
+                              rendered="#{loginVC.config.publicRegistration}"/>
+                </f:facet>
+                <f:facet name="left">
+                    <p:button value="#{loginMsg['forgot.panel.header']}" 
+                              icon="back" 
+                              href="#forgot?transition=slide"
+                              rendered="#{loginVC.config.publicForgot}"/>
+                </f:facet>                
+            </pm:header>
+
+            <pm:content>
+                <h:form id="mobileLoginForm">
+                    <p:inputText label="#{loginMsg['login.panel.email.watermark']}" type="email" value="#{loginVC.email}"/>
+
+                    <p:inputText label="#{loginMsg['login.panel.password.watermark']}" type="password" value="#{loginVC.password}"/>
+
+                    <p:commandButton value="#{loginMsg['login.panel.action.login.value']}" 
+                                     type="submit" 
+                                     icon="check"                                        
+                                     action="#{loginVC.loginAction.execute}"/>
+                </h:form>
+            </pm:content>        
+        </pm:view>
+
+        <pm:view id="registration">
+            <pm:header title="#{loginMsg['registration.panel.header']}">
+                <f:facet name="left">
+                    <p:button value="Back" icon="back" href="#login?reverse=true"/>
+                </f:facet>
+            </pm:header>
+
+            <pm:content>
+                <h:form id="mobileRegistrationForm">
+                    <p:inputText label="#{loginMsg['registration.panel.firstName.label']}" 
+                                 value="#{registrationVC.registration.firstName}"/>
+                    <p:inputText label="#{loginMsg['registration.panel.lastName.label']}" 
+                                 value="#{registrationVC.registration.lastName}"/>                
+                    <p:inputText label="#{loginMsg['registration.panel.email.label']}" type="email" 
+                                 value="#{registrationVC.registration.email}"/>
+                    <p:inputText label="#{loginMsg['registration.panel.password.label']}" type="password" 
+                                 value="#{registrationVC.password1}"/>
+                    <p:inputText label="#{loginMsg['registration.panel.cofirm.label']}" type="password" 
+                                 value="#{registrationVC.password2}"/>
+                    <p:commandButton value="#{loginMsg['registration.panel.action.signup.value']}" type="button" icon="check" 
+                                     rendered="#{registrationVC.registerAction.available}"
+
+                                     disabled="#{!registrationVC.registerAction.enabled}"
+                                     action="#{registrationVC.registerAction.execute}"/>
+                </h:form>
+            </pm:content>        
+        </pm:view>
+
+        <pm:view id="forgot">
+            <pm:header title="#{loginMsg['forgot.panel.header']}">
+                <f:facet name="left">
+                    <p:button value="Back" icon="back" href="#login?reverse=true"/>
+                </f:facet>
+            </pm:header>
+
+            <pm:content>
+                <h:form id="mobileRForgotForm">
+                    <p:inputText label="#{loginMsg['forgot.panel.email.label']}" type="email"
+                                 value="#{loginVC.email}"/>
+                    <p:commandButton value="#{loginMsg['forgot.panel.action.value']}" type="button" icon="check" 
+                                     rendered="#{loginVC.forgotAction.available}"
+                                     disabled="#{!loginVC.forgotAction.enabled}"
+                                     action="#{loginVC.forgotAction.execute}"/>
+                </h:form>
+            </pm:content>        
+        </pm:view>
+
+    </pm:page>
+
+</f:view>

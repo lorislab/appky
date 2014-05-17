@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="#{mobileMsg['page.title']}">
+        <f:facet name="preinit">
+<!--            <c:if test="#{!userAgent.windows8}">
+                <link type="text/css" rel="stylesheet" href="#{request.contextPath}/javax.faces.resource/mobile.css.xhtml?ln=primefaces-mobile" title="mobile"/>
+            </c:if>
+            <c:if test="#{userAgent.windows8}">
+                <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/jquery.mobile.metro.theme.css" title="default"/>
+            </c:if>            -->
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/javax.faces.resource/mobile.css.xhtml?ln=primefaces-mobile" title="mobile"/>
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>#{mobileMsg['page.title']}</title>
+        </f:facet>
+        
+        <!-- Groups -->
+        <pm:view id="groups" swatch="b">
+            <pm:header title="#{mobileMsg['page.title']}">
+                <f:facet name="right"><p:button value="#{mobileMsg['page.settings.menu.value']}" icon="gear" href="#settings?transition=slide"/></f:facet>
+            </pm:header>
+            <pm:content>
+                <h:form id="groupsForm">                    
+                    <p:dataList value="#{mobileGroupVC.groups}" var="group" swatch="c">
+                        <f:attribute name="filter" value="true" />
+                        <p:commandLink action="pm:applications?transition=slide" update=":applicationsForm" 
+                                       actionListener="#{mobileApplicationVC.open(group.guid)}">
+                            <p:graphicImage value="/rest/mobile/document/image/#{group.model.icon.guid}?path=/resources/img/noicon.png" />
+                            <h3>#{group.title.value}</h3>
+                            <p>#{group.description.value}</p>                                             
+                        </p:commandLink>
+                    </p:dataList>
+                </h:form>
+            </pm:content>
+
+        </pm:view>
+
+        <pm:view id="applications" swatch="b">
+            <pm:header title="#{mobileMsg['page.applications.title']}">
+                <f:facet name="left"><p:button value="#{mobileMsg['page.back']}" icon="back" href="#groups?reverse=true"/></f:facet>
+                <f:facet name="right"><p:button value="#{mobileMsg['page.settings.menu.value']}" icon="gear" href="#settings?transition=slide"/></f:facet>
+            </pm:header>
+            <pm:content>
+                <h:form id="applicationsForm">
+
+                    <p:dataList id="applicationsEntries" value="#{mobileApplicationVC.applications}" var="app" swatch="c" rendered="#{not empty mobileApplicationVC.applications}">                        
+                        <f:attribute name="filter" value="true" />
+                        <p:commandLink action="pm:application?transition=slide" update=":applicationForm" actionListener="#{mobilePlatformVC.open(app)}">
+                            <p:graphicImage value="/rest/mobile/document/image/#{app.platform.icon.guid}?path=/resources/img/noicon.png"/>
+                            <h3>#{app.title.value}</h3> 
+                            <p>#{app.description.value}</p>            
+                        </p:commandLink>
+                    </p:dataList> 
+                </h:form>
+            </pm:content>
+        </pm:view>
+
+        <pm:view id="application" swatch="b">
+            <pm:header title="#{mobileMsg['page.application.title']}">
+                <f:facet name="left"><p:button value="#{mobileMsg['page.back']}" icon="back" href="#applications?reverse=true;transition=slide"/></f:facet>
+                <f:facet name="right"><p:button value="#{mobileMsg['page.settings.menu.value']}" icon="gear" href="#settings?transition=slide"/></f:facet>
+            </pm:header>
+            <pm:content>
+                <div style="width: 980px">
+
+                    <h:form id="applicationForm">
+
+                        <div style="float: right; clear: right; width: 683px">
+
+                            <h:outputText style="font-size: 30px; font-weight: bold;" value="#{mobilePlatformVC.applicationWrapper.title.value}"/>
+                            <br/>                            
+                            <br/>
+                            <p:panel header="#{mobileMsg['page.application.description']}" collapsed="false" swatch="c">
+                                <h:outputText value="#{mobilePlatformVC.applicationWrapper.description.value}" escape="false"/>                        
+                                <br/>
+                                <h:outputText value="#{mobilePlatformVC.wrapper.platformDescription.value}" escape="false"/>
+                            </p:panel>
+
+                            <p:panel header="#{mobilePlatformVC.wrapper.model.name}" collapsed="true" swatch="c" rendered="#{not empty mobilePlatformVC.wrapper.model}">
+                                <h:outputText value="#{mobilePlatformVC.wrapper.versionDescription.value}" escape="false"/>
+                            </p:panel>
+
+
+                            <p:panel header="#{mobileMsg['page.application.images']}" collapsed="false" swatch="c" rendered="#{not empty mobilePlatformVC.wrapper.platform.images}">
+                                <ul style="width: 500px; white-space: nowrap; overflow-x: scroll; overflow-y: none;" >
+                                    <ui:repeat value="#{mobilePlatformVC.wrapper.platform.images}" var="image">
+                                        <li style="display: inline; list-style-type: none;">
+                                            <p:graphicImage value="/rest/mobile/document/image/#{image.guid}" alt="#{image.name}" />
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                                <h:graphicImage name="img/noimage.png"
+                                                width="200" height="200"
+                                                rendered="#{empty mobilePlatformVC.wrapper.platform.images}" />
+                            </p:panel>
+
+                        </div>
+                        <div style="float: left; width: 199px">
+
+                            <p:graphicImage value="/rest/mobile/document/image/#{mobilePlatformVC.wrapper.platform.icon.guid}?path=/resources/img/noicon.png"/>
+                            <br/>
+                            <ui:param name="actionValue" value="page.application.action.#{mobilePlatformVC.wrapper.processAction}" />
+                            <p:button value="#{mobileMsg[actionValue]}" 
+                                      icon="check"
+                                      rendered="#{not empty mobilePlatformVC.wrapper.processAction}"
+                                      href="/rest/mobile/document/package" />
+                            <br/>
+                            <p:commandButton value="#{mobileMsg['page.application.action.REMOVE']}"                                              
+                                             rendered="#{mobilePlatformVC.removeApplicationAction.available}"
+                                             icon="delete"
+                                             swatch="c"
+                                             update=":applicationForm"
+                                             actionListener="#{mobilePlatformVC.removeApplicationAction.execute}"/>                                                 
+                            <br/>
+                            <br/>
+                            <h:outputText style="font-size: 14px" value="#{mobileMsg['page.application.created']}" />
+                            <h:outputText style="font-size: 14px" value="#{mobilePlatformVC.wrapper.platform.creationDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                            </h:outputText>    
+                            <br/>                            
+                            <h:outputText style="font-size: 14px" value="#{mobileMsg['page.application.updated']}" />
+                            <h:outputText style="font-size: 14px" value="#{mobilePlatformVC.wrapper.platform.modificationDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                            </h:outputText>    
+                            <br/>
+                            <h:outputText style="font-size: 14px" rendered="#{not empty mobilePlatformVC.wrapper.model}"
+                                          value="#{mobileMsg['page.application.version']} #{mobilePlatformVC.wrapper.model.name}"/>
+                            <br/>
+                            <h:outputText style="font-size: 14px" rendered="#{not empty mobilePlatformVC.wrapper.model}"
+                                          value="#{mobileMsg['page.application.author']} #{mobilePlatformVC.wrapper.modificationUser.firstName} #{mobilePlatformVC.wrapper.modificationUser.lastName}"/>
+                            <br/>
+                            <h:outputText style="font-size: 14px" value="#{mobileMsg['page.application.userVersion']} #{mobilePlatformVC.wrapper.userVersion.name}" 
+                                          rendered="#{not empty mobilePlatformVC.wrapper.userVersion}"/>  
+
+                        </div>
+                    </h:form>
+                </div>
+            </pm:content>
+        </pm:view>
+
+        <pm:view id="settings" swatch="b">
+            <pm:header title="#{mobileMsg['page.settings.title']}">
+                <f:facet name="left">
+                    <p:button value="#{mobileMsg['page.back']}" icon="back" href="#groups?reverse=true"/>
+                </f:facet>
+            </pm:header>
+            <pm:content>
+                <h:form id="settingsForm">
+                    <p:commandButton value="#{mobileMsg['page.settings.refresh.value']}" 
+                                     icon="refresh" 
+                                     rendered="#{mobileGroupVC.refreshAction.available}"
+                                     disabled="#{!mobileGroupVC.refreshAction.enabled}"
+                                     action="#{mobileGroupVC.refreshAction.execute}" />
+                    <p:button value="#{mobileMsg['page.settings.changePassword.value']}" 
+                              icon="grid" 
+                              href="#passwordChange?transition=slide" />
+                    <p:commandButton value="#{mobileMsg['page.settings.logout.value']}" 
+                                     type="submit" 
+                                     icon="delete"      
+                                     rendered="#{loginVC.logoutAction.available}"
+                                     disabled="#{!loginVC.logoutAction.enabled}"
+                                     action="#{loginVC.logoutAction.execute}"/>
+                </h:form>
+            </pm:content>
+        </pm:view>
+
+        <pm:view id="passwordChange" swatch="b">
+            <pm:header title="#{mobileMsg['page.settings.title']}">
+                <f:facet name="left">
+                    <p:button value="#{mobileMsg['page.back']}" icon="back" href="#settings?reverse=true"/>
+                </f:facet>
+            </pm:header>
+            <pm:content>
+                <h:form id="passwordChangeForm">
+                    <p:inputText label="#{mobileMsg['page.back']}" 
+                                 type="password" value="#{changePasswordVC.password}" required="true"/>
+                    <p:inputText label="#{mobileMsg['page.settings.changePassword.new.value']}" 
+                                 type="password" value="#{changePasswordVC.password1}" required="true"/>
+                    <p:inputText label="#{mobileMsg['page.settings.changePassword.confirm.value']}" 
+                                 type="password" value="#{changePasswordVC.password2}" required="true"/>
+                    <p:commandButton value="#{mobileMsg['page.settings.changePassword.action.changePassword.value']}"
+                                     action="pm:settings?transition=slide"
+                                     rendered="#{changePasswordVC.changePasswordAction.available}"
+                                     disabled="#{!changePasswordVC.changePasswordAction.enabled}"
+                                     actionListener="#{changePasswordVC.changePasswordAction.execute}"
+                                     icon="check"/> 
+                </h:form>
+            </pm:content>
+        </pm:view> 
+        
+        <p:idleMonitor
+         timeout="#{session.maxInactiveInterval * 1000 - 1000}"
+         onidle="window.location.href=#{request.contextPath}/" />
+            
+    </pm:page>
+</f:view>

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/public/desktop/templates/masterLayout.xhtml">
+
+    <ui:define name="contentArea">
+        <f:metadata>  
+            <f:viewParam name="guid" value="#{invitationRequestVC.guid}"/> 	
+            <f:viewParam name="action" value="#{invitationRequestVC.action}"/>                
+            <f:event type="preRenderView" listener="#{invitationRequestVC.validateRequest}"></f:event>  
+        </f:metadata> 
+
+        
+        <h:outputLabel rendered="#{!invitationRequestVC.validate}" value="Bad request" />
+
+        <center>
+            <br/>
+            <br/>
+            <p:panel id="invitationPanel" header="Invitation" style="width: 400px;" rendered="#{invitationRequestVC.validate}">
+                <h:outputText value="Invitation from #{invitationRequestVC.requestUser.firstName} #{invitationRequestVC.requestUser.lastName}" />
+                <h:form>
+                    <h:panelGrid columns="3">
+
+                        <h:outputText value="First Name:" />
+                        <p:inputText value="#{invitationRequestVC.registration.firstName}" id="firstName" label="firstName" size="40" >
+                            <f:validateLength minimum="3" maximum="20" />
+                            <f:validateRequired />                        
+                        </p:inputText>
+                        <p:message for="firstName" id="fnMessage" display="icon"/> 
+
+                        <h:outputText value="Last Name:" />
+                        <p:inputText value="#{invitationRequestVC.registration.lastName}" id="lastName" label="lastName" size="40">
+                            <f:validateLength minimum="3" maximum="20" />
+                            <f:validateRequired />
+                        </p:inputText>
+                        <p:message for="lastName" id="lnMessage" display="icon"/> 
+
+                        <h:outputText value="Email:" />
+                        <h:outputText value="#{invitationRequestVC.registration.email}" /> 
+                        <h:outputText value="" />
+                        
+                        <h:outputText value="Password:" />
+                        <p:password value="#{invitationRequestVC.password1}" id="password1" 
+                                    label="password1" match="password2" required="true" 
+                                    size="40"
+                                    feedback="true"/>
+                        <p:message for="password1" id="password1Message" display="icon" /> 
+
+                        <h:outputText value="Confirm:"/>
+                        <p:password value="#{invitationRequestVC.password2}" id="password2" size="40" label="password2" required="true"/>
+                        <p:message for="password2" id="password2Message" display="icon"/> 
+
+                    </h:panelGrid>
+                    <div align="right">
+                        <p:commandButton value="Cancel" 
+                                         icon="ui-icon-cancel" 
+                                         immediate="true"  
+                                         ajax="false"
+                                         update=":invitationPanel"
+                                         actionListener="#{invitationRequestVC.cancelAction.execute}"/>                        
+                        <p:commandButton value="Sign Up" 
+                                         icon="ui-icon-check" 
+                                         process="@form"
+                                         ajax="false"
+                                         update=":invitationPanel"
+                                         action="#{invitationRequestVC.singupAction.execute}"/>
+                    </div>
+                </h:form> 
+            </p:panel>
+        </center>
+
+    </ui:define>
+</ui:composition>   

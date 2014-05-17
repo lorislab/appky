@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="footer">
+        <p class="copyright">Running 1.0.0-SNAPSHOT</p>
+    </div>
+
+    <p:idleMonitor
+         timeout="#{session.maxInactiveInterval * 1000 - 1000}"
+         onidle="window.location.href=#{request.contextPath}/" />
+    
+    <ui:insert name="status">
+        <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+            <f:facet name="start">
+                <p:graphicImage value="/images/loading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+    </ui:insert>
+
+    <p:growl id="growl" showDetail="true" sticky="true" /> 
+</ui:composition>

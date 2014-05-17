@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="userProfileForm">
+        <p:panel id="userProfilePanel">
+            <h:panelGrid id="userProfilePanelGrid" columns="2" cellpadding="4"> 
+                <h:outputText value="#{profileMsg['profile.fistName.value']}" 
+                              title="#{profileMsg['profile.fistName.title']}"/>  
+                <p:inputText value="#{userProfileVC.model.firstName}" size="30" 
+                             title="#{profileMsg['profile.fistName.title']}"/> 
+
+                <h:outputText value="#{profileMsg['profile.middleName.value']}"
+                              title="#{profileMsg['profile.middleName.title']}"/>  
+                <p:inputText value="#{userProfileVC.model.middleName}" size="30" 
+                             title="#{profileMsg['profile.middleName.title']}"/> 
+
+                <h:outputText value="#{profileMsg['profile.lastName.value']}"
+                              title="#{profileMsg['profile.lastName.title']}"/>  
+                <p:inputText value="#{userProfileVC.model.lastName}" size="30"
+                             title="#{profileMsg['profile.lastName.title']}"/> 
+
+                <h:outputText value="#{profileMsg['profile.created.value']}" 
+                              title="#{profileMsg['profile.created.title']}"/>  
+                <h:outputText value="#{userProfileVC.model.creationDate}"
+                              title="#{profileMsg['profile.created.title']}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                </h:outputText>  
+
+                <h:outputText value="#{profileMsg['profile.lastChanged.value']}" 
+                              title="#{profileMsg['profile.lastChanged.title']}"/>  
+                <h:outputText value="#{userProfileVC.model.modificationDate}"
+                              title="#{profileMsg['profile.lastChanged.title']}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                </h:outputText>
+
+                <h:outputText value="#{profileMsg['profile.email.value']}"
+                              title="#{profileMsg['profile.email.title']}"/>  
+                <h:outputText value="#{userProfileVC.model.email}"
+                              title="#{profileMsg['profile.email.title']}"/>             
+
+                <h:outputText value="#{profileMsg['profile.locale.value']}" rendered="#{not empty userProfileVC.locales}"
+                              title="#{profileMsg['profile.locale.title']}"/>             
+                <p:selectOneMenu id="userProfileLangs" 
+                                 value="#{userProfileVC.model.locale}"
+                                 rendered="#{not empty userProfileVC.locales}" converter="#{localeConverter}">
+                    <f:selectItems value="#{userProfileVC.locales}" var="loc" itemLabel="#{loc.displayLanguage}" itemValue="#{loc}"/>
+                </p:selectOneMenu>            
+            </h:panelGrid>    
+
+            <br/>
+            <p:dataTable var="pp" value="#{userProfileVC.model.properties}" id="paramTable" rowKey="#{pp.guid}" styleClass="hide-column-names">   
+                <p:column headerText="Name" width="200">  
+                    <ui:param name="title" value="#{pp.name}.title" />
+                    <h:outputText value="#{profileMsg[pp.name]}" title="#{profileMsg[title]}"/>  
+                </p:column>  
+                <p:column headerText="Value" width="200">  
+                    <p:selectBooleanCheckbox value="#{pp.value}" converter="ConfigParamBooleanConverter"                                         
+                                             rendered="#{pp.type == 'BOOLEAN'}" />
+                    <p:spinner value="#{pp.value}" converter="ConfigParamIntegerConverter"
+                               title="#{profileMsg[title]}"
+                               rendered="#{pp.type == 'INTEGER'}" />
+                </p:column>           
+            </p:dataTable>
+
+            <br/>
+            <div align="right">                                 
+                <p:commandButton id="chnagePasswordButton" 
+                                 value="#{profileMsg['profile.action.changePassword.value']}" 
+                                 title="#{profileMsg['profile.action.changePassword.title']}"
+                                 icon="icon-button-password" 
+                                 oncomplete="userChangePasswordDialog.show()" />  
+
+                <p:commandButton id="profileSaveButton" 
+                                 value="#{profileMsg['profile.action.save.value']}" 
+                                 title="#{profileMsg['profile.action.save.title']}"
+                                 icon="icon-button-save" 
+                                 update=":userProfileForm:userProfilePanel"
+                                 rendered="#{userProfileVC.saveAction.available}"
+                                 disabled="#{!userProfileVC.saveAction.enabled}"
+                                 actionListener="#{userProfileVC.saveAction.execute}" />            
+            </div>
+        </p:panel>
+    </h:form>      
+
+
+    <!-- CHANGE PASSWORD DIALOG -->
+    <ui:include src="dialog/changePassword.xhtml" />
+</ui:composition>

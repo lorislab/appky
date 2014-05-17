@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:mstore="http://java.sun.com/jsf/composite/components"
+                template="/public/desktop/templates/masterLayout.xhtml">
+
+    <ui:define name="contentArea">
+        <div style="width:400px;margin:0px auto;text-align:left;padding:0px;">
+            <p:tabView id="loginTabView" style="width: 400px;">  
+
+                <p:tab id="loginTab" title="#{loginMsg['login.panel.header']}">  
+                    <h:form id="loginForm">
+                        <h:panelGrid columns="1">                    
+                            <p:inputText value="#{loginVC.email}" id="emailx" 
+                                         size="40"
+                                         title="#{loginMsg['login.panel.email.watermark']}" 
+                                         validatorMessage="#{loginMsg['login.panel.email.validation']}">
+                                <f:validateRegex
+                                    pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$"></f:validateRegex>
+
+                            </p:inputText>
+                            <p:watermark for="emailx" value="#{loginMsg['login.panel.email.watermark']}" />
+                            <p:message for="emailx" id="emailxMessage" display="icon"/> 
+
+                            <p:password value="#{loginVC.password}" 
+                                        id="password" 
+                                        label="password" required="true" size="40"
+                                        title="#{loginMsg['login.panel.password.watermark']}"/>
+                            <p:message for="password" id="passwordMessage" display="icon"/> 
+                            <p:watermark for="password" value="#{loginMsg['login.panel.password.watermark']}" />                                                
+                        </h:panelGrid>
+                        <div align="right">
+                            <p:commandButton 
+                                value="#{loginMsg['login.panel.action.login.value']}" 
+                                title="#{loginMsg['login.panel.action.login.title']}"
+                                rendered="#{loginVC.loginAction.available}"
+                                disabled="#{!loginVC.loginAction.enabled}"
+                                icon="icon-button-ok"
+                                action="#{loginVC.loginAction.execute}" ajax="false"/>                        
+                        </div>
+                    </h:form>                    
+                </p:tab>  
+
+                <p:tab id="registrationTab" title="#{loginMsg['registration.panel.header']}" rendered="#{loginVC.config.publicRegistration}">         
+                    <h:form>
+                        <h:panelGrid columns="3">
+
+                            <h:outputText value="#{loginMsg['registration.panel.firstName.label']}" />
+                            <p:inputText value="#{registrationVC.registration.firstName}" 
+                                         title="#{loginMsg['registration.panel.firstName.label']}"
+                                         id="firstName" 
+                                         label="firstName" 
+                                         size="40" >
+                                <f:validateLength minimum="3" maximum="20" />
+                                <f:validateRequired />                        
+                            </p:inputText>
+                            <p:message for="firstName" id="fnMessage" display="icon"/> 
+
+                            <h:outputText value="#{loginMsg['registration.panel.lastName.label']}" />
+                            <p:inputText value="#{registrationVC.registration.lastName}"
+                                         title="#{loginMsg['registration.panel.lastName.label']}"
+                                         id="lastName" 
+                                         label="lastName" size="40">
+                                <f:validateLength minimum="3" maximum="20" />
+                                <f:validateRequired />
+                            </p:inputText>
+                            <p:message for="lastName" id="lnMessage" display="icon"/> 
+
+                            <h:outputText value="#{loginMsg['registration.panel.email.label']}" />
+                            <p:inputText value="#{registrationVC.registration.email}" 
+                                         title="#{loginMsg['registration.panel.email.label']}"
+                                         id="email" 
+                                         size="40" 
+                                         validatorMessage="#{loginMsg['registration.panel.email.validation']}">
+                                <f:validateRegex
+                                    pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$"></f:validateRegex>
+                            </p:inputText>
+                            <p:message for="email" id="emailMessage" display="icon"/> 
+
+                            <h:outputText value="#{loginMsg['registration.panel.password.label']}" />
+                            <p:password value="#{registrationVC.password1}" 
+                                        id="password1" 
+                                        title="#{loginMsg['registration.panel.password.label']}"
+                                        label="password1" 
+                                        match="password2" 
+                                        required="true" 
+                                        size="40"
+                                        feedback="true"/>
+                            <p:message for="password1" id="password1Message" display="icon" /> 
+
+                            <h:outputText value="#{loginMsg['registration.panel.cofirm.label']}"/>
+                            <p:password value="#{registrationVC.password2}" 
+                                        id="password2" 
+                                        size="40" 
+                                        title="#{loginMsg['registration.panel.cofirm.label']}"
+                                        label="password2" 
+                                        required="true"/>
+                            <p:message for="password2" id="password2Message" display="icon"/> 
+
+                        </h:panelGrid>
+                        <div align="right">
+                            <p:commandButton value="#{loginMsg['registration.panel.action.signup.value']}" 
+                                             title="#{loginMsg['registration.panel.action.signup.title']}"
+                                             icon="icon-button-ok"
+                                             process="@form"
+                                             update=":loginTabView"
+                                             rendered="#{registrationVC.registerAction.available}"
+                                             disabled="#{!registrationVC.registerAction.enabled}"
+                                             actionListener="#{registrationVC.registerAction.execute}"/>
+                        </div>
+                    </h:form>                     
+                </p:tab>  
+
+                <p:tab id="forgotPasswordTab" title="#{loginMsg['forgot.panel.header']}" rendered="#{loginVC.config.publicForgot}">  
+                    <h:form id="forgotPasswordForm">
+                        <h:panelGrid columns="1">                    
+                            <p:inputText value="#{loginVC.email}" id="forgotEmail" 
+                                         size="40"
+                                         title="#{loginMsg['forgot.panel.email.watermark']}"
+                                         validatorMessage="#{loginMsg['forgot.panel.email.validation']}">
+                                <f:validateRegex
+                                    pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$"></f:validateRegex>
+
+                            </p:inputText>
+                            <p:watermark for="forgotEmail" value="#{loginMsg['forgot.panel.email.watermark']}" />
+                            <p:message for="forgotEmail" id="forgotEmailMessage" display="icon"/> 
+
+                        </h:panelGrid>
+                        <div align="right">
+                            <p:commandButton 
+                                value="#{loginMsg['forgot.panel.action.value']}" 
+                                title="#{loginMsg['forgot.panel.action.title']}" 
+                                icon="icon-button-ok"
+                                rendered="#{loginVC.forgotAction.available}"
+                                disabled="#{!loginVC.forgotAction.enabled}"
+                                action="#{loginVC.forgotAction.execute}" ajax="false"/>                        
+                        </div>
+                    </h:form>                         
+                </p:tab>  
+
+            </p:tabView>            
+        </div>
+    </ui:define>
+</ui:composition>

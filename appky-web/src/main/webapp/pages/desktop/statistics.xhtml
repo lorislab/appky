@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/pages/desktop/templates/masterLayoutMenu.xhtml">
+
+    <ui:define name="content">
+        <p:outputPanel id="statisticsOutputPanel" >  
+            <p:tabView id="statisticsTabView" dynamic="true" cache="true" >
+                <p:tab id="tabMain"                        
+                       title="#{statisticsMsg['statistics.tab.value']}" 
+                       titletip="#{statisticsMsg['statistics.tab.title']}">
+                    <ui:include src="statistics/main.xhtml"/> 
+                </p:tab>
+            </p:tabView>                      
+        </p:outputPanel>            
+    </ui:define>
+</ui:composition>

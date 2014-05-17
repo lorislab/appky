@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- PACKAGE DIALOG -->
+    <p:dialog  header="#{commonMsg['common.upload.package.title']}" 
+               widgetVar="#{dialog_id}" 
+               resizable="false"  
+               width="550" 
+               id="packageDialogId" 
+               modal="true">  
+        <h:form id="formPackageDialog" enctype="multipart/form-data">
+            <div align="center">
+                <h:panelGrid id="createPackageDialogPanel" columns="2" cellpadding="4">                 
+
+                    <h:outputText value="#{packageVC.document.name}" 
+                                  rendered="#{!packageVC.document.noData}" />
+                    <h:graphicImage name="img/common/jabber_online.png" 
+                                    rendered="#{!packageVC.document.noData}"  
+                                    /> 
+                    <h:outputText value="#{commonMsg['common.upload.package.notfound']}" 
+                                  rendered="#{packageVC.document.noData}" />
+                    <h:graphicImage name="img/common/jabber_offline.png"
+                                    rendered="#{packageVC.document.noData}"  
+                                    />                       
+                </h:panelGrid> 
+            </div>
+            <br/>
+            <p:outputPanel id="createPackageDialogButtons" >
+                <div style="float: left;">
+                    <div style="float: right; padding-top: 10px;">
+                        <p:ajaxStatus>
+                            <f:facet name="start">
+                                <p:graphicImage value="/images/ajax-file-upload.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus> 
+                    </div>
+                    <p:fileUpload 
+                        fileUploadListener="#{packageVC.uploadEvent}"   
+                        rendered="#{packageVC.uploadAction.available}"
+                        disabled="#{!packageVC.uploadAction.enabled}"
+                        mode="advanced"  
+                        update="formPackageDialog:createPackageDialogPanel formPackageDialog:packageDialogSaveButton"
+                        auto="true" 
+                        sizeLimit="10000000"
+                        label="#{commonMsg['common.upload.package.action.choose.value']}"
+                        allowTypes="#{packageVC.allowFiles}">                  
+                    </p:fileUpload>
+                </div>
+                <div style="float: right;">
+                    <p:commandButton id="packageDialogSaveButton" 
+                                     icon="icon-button-ok" 
+                                     rendered="#{packageVC.acceptAction.available}"
+                                     disabled="#{!packageVC.acceptAction.enabled}"                                     
+                                     value="#{commonMsg['common.upload.package.action.accept.value']}"
+                                     title="#{commonMsg['common.upload.package.action.accept.title']}"
+                                     actionListener="#{parentPackageVC.updatePackage(packageVC.document)}" 
+                                     update="#{dialog_onsave_update}"
+                                     oncomplete="#{dialog_id}.hide()" />
+                    <p:commandButton id="packageDialogCloseButton" 
+                                     rendered="#{packageVC.cancelAction.available}"
+                                     disabled="#{!packageVC.cancelAction.enabled}"
+                                     value="#{commonMsg['common.upload.package.action.cancel.value']}"
+                                     title="#{commonMsg['common.upload.package.action.cancel.title']}" 
+                                     icon="icon-button-cancel" 
+                                     onclick="#{dialog_id}.hide()" />
+                </div>
+            </p:outputPanel>
+        </h:form>    
+    </p:dialog> 
+
+</ui:composition>

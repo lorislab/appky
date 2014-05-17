@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="
+      http://java.sun.com/xml/ns/javaee
+      http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <converter>
+        <converter-for-class>java.lang.Enum</converter-for-class>
+        <converter-class>javax.faces.convert.EnumConverter</converter-class>
+    </converter>
+    
+    <!-- LOGIN PAGE -->
+    <navigation-rule>
+        <display-name>login</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <if>#{!userAgent.mobile}</if>
+            <from-outcome>navigationToPrivate</from-outcome>
+            <to-view-id>/pages/desktop/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <if>#{userAgent.mobile}</if>
+            <from-outcome>navigationToPrivate</from-outcome>
+            <to-view-id>/pages/mobile/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>        
+    </navigation-rule>    
+                
+    <!-- MAIN PAGE -->
+    <navigation-rule>
+        <display-name>logout</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationToPublic</from-outcome>
+            <to-view-id>/public/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule> 
+    
+    <!-- MENU HOME -->
+    <navigation-rule>
+        <display-name>MenuHome</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToHome</from-outcome>
+            <to-view-id>/pages/desktop/index</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule> 
+    <!-- MENU APPLICATION -->
+    <navigation-rule>
+        <display-name>MenuApplication</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToApplication</from-outcome>
+            <to-view-id>/pages/desktop/applications</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule> 
+    <!-- MENU USERS -->
+    <navigation-rule>
+        <display-name>MenuUsers</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToUsers</from-outcome>
+            <to-view-id>/pages/desktop/users</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule>
+    <!-- MENU ROLES -->
+    <navigation-rule>
+        <display-name>MenuRoles</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToRoles</from-outcome>
+            <to-view-id>/pages/desktop/roles</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule>    
+    <!-- MENU STATISTICS -->
+    <navigation-rule>
+        <display-name>MenuStatistics</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToStatistics</from-outcome>
+            <to-view-id>/pages/desktop/statistics</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule>    
+    <!-- MENU PREFERENCES -->
+    <navigation-rule>
+        <display-name>MenuPreferences</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToPreferences</from-outcome>
+            <to-view-id>/pages/desktop/preferences</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule>
+    <!-- MENU INVITATION -->
+    <navigation-rule>
+        <display-name>MenuInvitation</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToInvitation</from-outcome>
+            <to-view-id>/pages/desktop/invitation</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule>          
+    <!-- MENU PROFILE -->
+    <navigation-rule>
+        <display-name>MenuInvitation</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>navigationMenuToProfile</from-outcome>
+            <to-view-id>/pages/desktop/profile</to-view-id>
+            <redirect />
+        </navigation-case>       
+    </navigation-rule>
+
+    <application>
+        <locale-config>
+            <supported-locale>de</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.resources.CommonBundle</base-name>
+            <var>commonMsg</var>
+        </resource-bundle>        
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.login.resources.LoginBundle</base-name>
+            <var>loginMsg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.profile.resources.ProfileBundle</base-name>
+            <var>profileMsg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.invitation.resources.InvitationBundle</base-name>
+            <var>invitationMsg</var>
+        </resource-bundle> 
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.preferences.resources.PreferencesBundle</base-name>
+            <var>preferencesMsg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.statistics.resources.StatisticsBundle</base-name>
+            <var>statisticsMsg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.user.resources.UsersBundle</base-name>
+            <var>usersMsg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.role.resources.RolesBundle</base-name>
+            <var>rolesMsg</var>
+        </resource-bundle>        
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.admin.app.resources.ApplicationBundle</base-name>
+            <var>appMsg</var>
+        </resource-bundle> 
+        <resource-bundle>
+            <base-name>com.ajkaandrej.mstore.web.mobile.resources.MobileBundle</base-name>
+            <var>mobileMsg</var>
+        </resource-bundle>                                                       
+    </application>
+  
+</faces-config>

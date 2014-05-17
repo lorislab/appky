@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    
+        <p:dataTable var="role" 
+                     value="#{roleTableVC.result}" 
+                     id="rolesTable" 
+                     rowKey="#{role.guid}" 
+                     paginatorAlwaysVisible="true"                     
+                     rows="10"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+                     selectionMode="single">  
+
+            <p:ajax event="rowSelect" listener="#{roleVC.onRowSelect}" update=":usersRolesForm:userRolesPanel"/>
+
+        <f:facet name="header">
+            <div align="left">                         
+                <p:commandButton icon="icon-button-refresh" 
+                                 update=":rolesTable" 
+                                 title="#{rolesMsg['roles.action.refresh.title']}"
+                                 rendered="#{roleTableVC.searchAction.available}"
+                                 disabled="#{!roleTableVC.searchAction.enabled}"
+                                 actionListener="#{roleTableVC.searchAction.execute}"/>   
+            </div>
+        </f:facet>
+            
+            <p:column headerText="#{rolesMsg['roles.table.name.value']}">  
+                <h:outputText value="#{role.id}" />   
+            </p:column>  
+
+            <p:column headerText="#{rolesMsg['roles.table.description.value']}">  
+                <h:outputText value="#{role.name}" />  
+            </p:column> 
+            <p:column headerText="#{rolesMsg['roles.table.creationDate.value']}">
+                <h:outputText value="#{role.creationDate}">  
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                </h:outputText>
+            </p:column>             
+            <p:column headerText="#{rolesMsg['roles.table.modificationDate.value']}">
+                <h:outputText value="#{role.modificationDate}">  
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                </h:outputText>
+            </p:column> 
+            <p:column headerText="#{rolesMsg['roles.table.editable.value']}"> 
+                <div align="center">
+                    <h:outputText styleClass="ui-icon icon-enabled-true" rendered="#{role.editable}" />
+                    <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{!role.editable}" />
+                </div>
+            </p:column>            
+            <p:column headerText="#{rolesMsg['roles.table.enabled.value']}"> 
+                <div align="center">
+                    <h:outputText styleClass="ui-icon icon-enabled-true" rendered="#{role.enabled}" />
+                    <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{!role.enabled}" />
+                </div>
+            </p:column>            
+        </p:dataTable>
+
+        <br/>
+    <h:form id="usersRolesForm">        
+        <p:panel id="userRolesPanel">
+            <ui:param name="panelDisabled" value="#{!roleVC.saveAction.enabled}"/>
+            <h:panelGrid id="rolesPanelGrid" columns="2" cellpadding="4">
+
+                <h:outputText value="#{rolesMsg['roles.panel.name.value']}"
+                              title="#{rolesMsg['roles.panel.name.title']}"/>
+                <p:inputText value="#{roleVC.model.id}" size="50" maxlength="50"
+                             disabled="#{panelDisabled}"
+                             title="#{rolesMsg['roles.panel.name.title']}"/>
+
+                <h:outputText value="#{rolesMsg['roles.panel.description.value']}"
+                              title="#{rolesMsg['roles.panel.description.title']}"/>
+                <p:inputText value="#{roleVC.model.name}" size="50" maxlength="50"
+                             disabled="#{panelDisabled}"
+                             title="#{rolesMsg['roles.panel.description.title']}"/>
+                <h:outputText value="#{rolesMsg['roles.panel.enabled.value']}" 
+                              title="#{rolesMsg['roles.panel.enabled.title']}"/>
+                <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{empty roleVC.model}" />                
+                <p:selectBooleanButton value="#{roleVC.model.enabled}" 
+                                       disabled="#{panelDisabled}"
+                                       rendered="#{not empty roleVC.model}"
+                                       onLabel="#{commonMsg['common.switch.on']}" 
+                                       offLabel="#{commonMsg['common.switch.off']}"                                     
+                                       onIcon="icon-enabled-true" 
+                                       offIcon="icon-enabled-false"  />                
+            </h:panelGrid>
+
+            <div align="right">
+                <p:commandButton icon="icon-button-create" 
+                                 value="#{rolesMsg['roles.panel.action.create.value']}"
+                                 title="#{rolesMsg['roles.panel.action.create.title']}"
+                                 rendered="#{roleVC.createAction.available}"
+                                 disabled="#{!roleVC.createAction.enabled}"
+                                 actionListener="#{roleVC.createAction.execute}" 
+                                 update=":usersRolesForm:userRolesPanel"
+                                 />  
+                <p:commandButton icon="icon-button-delete" 
+                                 value="#{rolesMsg['roles.panel.action.delete.value']}"
+                                 title="#{rolesMsg['roles.panel.action.delete.title']}"
+                                 rendered="#{roleVC.deleteAction.available}"
+                                 disabled="#{!roleVC.deleteAction.enabled}"
+                                 actionListener="#{roleVC.deleteAction.execute}" 
+                                 update=":usersRolesForm:userRolesPanel :rolesTable"
+                                 />                 
+                <p:commandButton icon="icon-button-save" 
+                                 value="#{rolesMsg['roles.panel.action.save.value']}"
+                                 title="#{rolesMsg['roles.panel.action.save.title']}"
+                                 rendered="#{roleVC.saveAction.available}"
+                                 disabled="#{!roleVC.saveAction.enabled}"
+                                 actionListener="#{roleVC.saveAction.execute}" 
+                                 update=":usersRolesForm:userRolesPanel :rolesTable"
+                                 />
+
+            </div>             
+        </p:panel>
+
+    </h:form>     
+</ui:composition>

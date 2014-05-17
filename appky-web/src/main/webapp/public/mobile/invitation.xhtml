@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:pm="http://primefaces.org/mobile"
+        xmlns:p="http://primefaces.org/ui"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="My application store">
+
+        <f:metadata>  
+            <f:viewParam name="guid" value="#{invitationRequestVC.guid}"/> 	
+            <f:viewParam name="action" value="#{invitationRequestVC.action}"/>                
+            <f:event type="preRenderView" listener="#{invitationRequestVC.validateRequest}"/>
+        </f:metadata> 
+        
+        <pm:view id="invitation">
+            <pm:header title="Invitation">
+                <f:facet name="left">
+                    <p:button value="Back" icon="back" href="/"/>
+                </f:facet>                
+            </pm:header>
+
+            <pm:content>
+                <h:outputLabel rendered="#{!invitationRequestVC.validate}" value="Bad request" />
+                
+                <h:form id="mobileInvitationForm" rendered="#{invitationRequestVC.validate}">
+                    <p:outputLabel value="Invitation from #{invitationRequestVC.requestUser.firstName} #{invitationRequestVC.requestUser.lastName}"/>
+                    <p:inputText label="Firstname:" value="#{invitationRequestVC.registration.firstName}"/>
+                    <p:inputText label="Lastname:" value="#{invitationRequestVC.registration.firstName}"/>                
+                    <p:inputText label="Email:" type="email" readonly="true" value="#{invitationRequestVC.registration.email}"/>
+
+                    <p:inputText label="Password:" type="password" value="#{invitationRequestVC.password1}"/>
+                    <p:inputText label="Confirm:" type="password" value="#{invitationRequestVC.password2}"/>
+                    
+                    <p:commandButton value="Cancel" type="submit" icon="cancel"
+                                     action="#{invitationRequestVC.cancelAction.execute}"/>
+                    <p:commandButton value="Sign Up" type="submit" icon="check" 
+                                     action="#{invitationRequestVC.singupAction.execute}"/>
+                </h:form>
+            </pm:content>        
+        </pm:view>
+
+    </pm:page>
+
+</f:view>

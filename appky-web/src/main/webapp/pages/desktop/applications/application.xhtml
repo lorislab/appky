@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:mstore="http://java.sun.com/jsf/composite/components">
+
+    <h:form id="formApplication" >
+        <h:panelGrid id="applicationPanel" columns="2" cellpadding="4">                
+
+            <h:outputText value="#{appMsg['app.name.value']}"
+                          title="#{appMsg['app.name.title']}"/>  
+            <p:inputText value="#{applicationVC.model.name}" 
+                         size="30"
+                         title="#{appMsg['app.name.title']}"/>  
+
+            <h:outputText value="#{appMsg['app.enabled.value']}" 
+                          title="#{appMsg['app.enabled.title']}"/>  
+            <p:selectBooleanButton value="#{applicationVC.model.enabled}" 
+                                   onLabel="#{commonMsg['common.switch.on']}" 
+                                   offLabel="#{commonMsg['common.switch.off']}"                                     
+                                   onIcon="icon-enabled-true" 
+                                   offIcon="icon-enabled-false"  />
+
+            <h:outputText value="#{appMsg['app.title.value']}"
+                          title="#{appMsg['app.title.title']}"/>
+            <mstore:title id="appTitlePanel" 
+                          descriptionVC="#{applicationVC.titleVC}"
+                          title="#{appMsg['app.title.title']}"
+                          buttonTitle="#{appMsg['app.title.button.title']}"
+                          update=":formApplication:appTitlePanel:panelGroup" />
+
+            <h:outputText value="#{appMsg['app.description.value']}"
+                          title="#{appMsg['app.description.title']}"/> 
+            <mstore:description id="appDescriptionPanel" 
+                                descriptionVC="#{applicationVC.descriptionVC}"
+                                buttonTitle="#{appMsg['app.description.button.title']}"
+                                update=":formApplication:appDescriptionPanel:panelGroup" />
+
+            <h:outputText value="#{appMsg['app.roles.value']}"
+                          title="#{appMsg['app.roles.title']}"/>        
+            <p:pickList id="applicationRoleList" value="#{applicationVC.applicationRoles}" var="role"
+                        rendered="#{not empty applicationVC.applicationRoles}"
+                        showSourceFilter="true"
+                        showTargetFilter="true"
+                        addLabel="#{commonMsg['common.roles.add']}"
+                        addAllLabel="#{commonMsg['common.roles.addAll']}"
+                        removeLabel="#{commonMsg['common.roles.remove']}"
+                        removeAllLabel="#{commonMsg['common.roles.removeAll']}"                        
+                        converter="#{roleConverter}"
+                        itemLabel="#{role.id}" 
+                        itemValue="#{role}" itemDisabled="#{role.deleted}">
+                <f:facet name="sourceCaption">#{commonMsg['common.roles.available']}</f:facet>  
+                <f:facet name="targetCaption">#{commonMsg['common.roles.current']}</f:facet>
+            </p:pickList>
+        </h:panelGrid>
+        <br/>
+        <div align="right">
+            <p:commandButton id="applicationDeleteButton" 
+                             value="#{appMsg['app.action.delete.value']}" 
+                             title="#{appMsg['app.action.delete.title']}" 
+                             icon="icon-button-delete" 
+                             rendered="#{applicationVC.deleteAction.available}"
+                             disabled="#{!applicationVC.deleteAction.enabled}"
+                             onclick="deleteApplicationDialog.show()"
+                             update=":deleteApplicationMessage"/>            
+            <p:commandButton id="applicationSaveButton" 
+                             value="#{appMsg['app.action.save.value']}" 
+                             title="#{appMsg['app.action.save.title']}" 
+                             icon="icon-button-save" 
+                             rendered="#{applicationVC.saveAction.available}"
+                             disabled="#{!applicationVC.saveAction.enabled}"
+                             actionListener="#{applicationVC.saveAction.execute}" 
+                             update=":groupsTreeForm:groupsTree" />
+        </div>
+    </h:form>
+
+    <!-- DELETE APPLICATION DIALOG -->
+    <p:confirmDialog id="deleteApplicationDialogId"
+                     message=""
+                     header="#{appMsg['app.delete.dialog.title']}" 
+                     widgetVar="deleteApplicationDialog">  
+        <f:facet name="message">
+            <h:outputFormat id="deleteApplicationMessage" value="#{appMsg['app.delete.dialog.message']}">
+                <f:param value="#{applicationVC.model.name}" />
+            </h:outputFormat>
+        </f:facet>
+        <p:commandButton id="deleteApplicationConfirm" 
+                         value="#{appMsg['app.delete.dialog.action.ok.value']}" 
+                         title="#{appMsg['app.delete.dialog.action.ok.title']}"
+                         oncomplete="deleteApplicationDialog.hide()" 
+                         update=":groupsTreeForm:groupsTree :contentApplicationTabView"
+                         icon="icon-button-ok"
+                         rendered="#{applicationVC.deleteAction.available}"
+                         disabled="#{!applicationVC.deleteAction.enabled}"
+                         actionListener="#{applicationVC.deleteAction.execute}" />  
+        <p:commandButton id="deleteApplicationDecline" 
+                         value="#{appMsg['app.delete.dialog.action.cancel.value']}" 
+                         title="#{appMsg['app.delete.dialog.action.cancel.title']}" 
+                         icon="icon-button-cancel"
+                         onclick="deleteApplicationDialog.hide()" 
+                         type="button" />   
+    </p:confirmDialog>
+
+</ui:composition>

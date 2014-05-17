@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/pages/desktop/templates/masterLayout.xhtml">
+
+    <ui:define name="sidebar">
+        <ui:include src="applications/sidebar.xhtml" />
+    </ui:define>    
+    <ui:define name="content">
+        
+        <p:outputPanel id="contentApplicationTabView" >  
+            <p:outputPanel id="mainTabView" rendered="#{empty treeVC.selectedNode}">
+                 <ui:include src="applications/main.xhtml"/>
+            </p:outputPanel>
+            <p:outputPanel id="groupTabView" rendered="#{treeVC.groupNode}">
+                 <ui:include src="applications/group.xhtml"/>
+            </p:outputPanel>  
+            <p:outputPanel id="applicationTabView" rendered="#{treeVC.applicationNode}">
+                 <ui:include src="applications/application.xhtml"/>
+            </p:outputPanel>     
+            <p:outputPanel id="platformTabView" rendered="#{treeVC.platformNode}">
+                 <ui:include src="applications/platform.xhtml"/>
+            </p:outputPanel>            
+            <p:outputPanel id="versionTabView" rendered="#{treeVC.versionNode}">
+                 <ui:include src="applications/version.xhtml"/>
+            </p:outputPanel>   
+            
+<!--            <p:tabView id="platformTabView" dynamic="false" cache="false" rendered="#{treeVC.platformNode}">         
+                
+                <p:ajax event="tabChange" listener="#{versionVC.onTabChange}" update=":platformTabView:tabPlatform :platformTabView:tabPlatformVersion"/>
+                
+                <p:tab id="tabPlatform" title="#{appMsg['platform.title.value']}"
+                       titletip="#{appMsg['platform.title.title']}">
+                    <ui:include src="applications/platform.xhtml" />
+                </p:tab>
+                <p:tab id="tabPlatformVersion" title="#{appMsg['version.title.value']}" titletip="#{appMsg['version.title.title']}">
+                    <ui:include src="applications/version.xhtml" />
+                </p:tab>                 
+            </p:tabView>                  -->
+        </p:outputPanel>
+
+    </ui:define>
+</ui:composition>

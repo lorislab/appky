@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:mstore="http://java.sun.com/jsf/composite/components">
+
+    <p:dataTable id="versionTable" var="ver" 
+                 value="#{versionsVC.result}" 
+                 rowKey="#{ver.guid}"
+                 widgetVar="versionTableWidget"
+                 selectionMode="single"                 
+                 paginatorAlwaysVisible="true"                     
+                 rows="10"
+                 paginator="true"
+                 paginatorPosition="bottom"
+                 paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"                 
+                 >        
+
+        <p:ajax event="rowSelect" listener="#{versionVC.onRowSelect}" update=":formVersion:versionPanel"/>
+
+        <f:facet name="header">
+            <div align="left">                         
+                <p:commandButton icon="icon-button-refresh" 
+                                 update=":versionTable" 
+                                 title="#{appMsg['versions.action.refresh.title']}"
+                                 rendered="#{versionsVC.searchAction.available}"
+                                 disabled="#{!versionsVC.searchAction.enabled}"
+                                 actionListener="#{versionsVC.searchAction.execute}"/>   
+            </div>
+        </f:facet>
+
+        <p:column headerText="#{appMsg['versions.name.value']}">  
+            <h:outputText value="#{ver.name}" />  
+        </p:column>
+        <p:column headerText="#{appMsg['versions.creationDate.value']}">  
+            <h:outputText value="#{ver.creationDate}">
+                <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+            </h:outputText>
+        </p:column>
+        <p:column headerText="#{appMsg['versions.modificationDate.value']}">  
+            <h:outputText value="#{ver.modificationDate}" >
+                <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+            </h:outputText>  
+        </p:column>
+        <p:column headerText="#{appMsg['versions.released.value']}">  
+            <div align="center">
+                <h:outputText styleClass="ui-icon icon-enabled-true" rendered="#{ver.released}" />
+                <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{!ver.released}" />
+            </div>            
+        </p:column>         
+    </p:dataTable>
+
+    <br/>
+
+    <h:form id="formVersion">
+        <p:panel id="versionPanel">
+            <ui:param name="disabledVersion" value="#{!versionVC.saveAction.enabled}" />
+            <h:panelGrid id="versionPanelGrid" columns="2" cellpadding="4"> 
+
+                <h:outputText value="#{appMsg['version.name.value']}"
+                              title="#{appMsg['version.name.title']}"/>
+                <p:inputText value="#{versionVC.model.name}" size="50" maxlength="50"
+                             disabled="#{disabledVersion}"/>
+
+                <h:outputText value="#{appMsg['version.released.value']}"
+                              title="#{appMsg['version.released.title']}"/>
+                
+                <h:outputText styleClass="ui-icon icon-enabled-true" rendered="#{versionVC.unreleaseAction.enabled}" />
+                <h:outputText styleClass="ui-icon icon-enabled-false" rendered="#{!versionVC.unreleaseAction.enabled}" />
+                
+                <h:outputText value="#{appMsg['version.description.value']}"
+                              title="#{appMsg['version.description.title']}"/>
+                <mstore:description id="versionDescriptionPanel"
+                                    disabled="#{disabledVersion}"
+                                    descriptionVC="#{versionVC.descriptionVC}" 
+                                    buttonTitle="#{appMsg['version.description.button.title']}"
+                                    update=":formVersion:versionDescriptionPanel:panelGroup" />
+
+                <h:outputText value="#{appMsg['version.package.value']}"
+                              title="#{appMsg['version.package.title']}"/>
+                <h:panelGrid id="versionPanelUpload" columns="3">
+
+                    <h:outputText value="#{appMsg['version.package.notfound']}" 
+                                  rendered="#{versionVC.model.data.noData or disabledVersion}"/>
+                    <h:outputText value="#{versionVC.model.data.name}" 
+                                  rendered="#{!versionVC.model.data.noData}"
+                                  title="#{appMsg['version.package.title']}"/>
+
+                    <p:commandButton icon="icon-button-upload" 
+                                     oncomplete="packageDialog.show()" 
+                                     update=":formPackageDialog:createPackageDialogButtons :formPackageDialog:createPackageDialogPanel"
+                                     immediate="true"
+                                     disabled="#{disabledVersion}"
+                                     actionListener="#{packageVC.open(versionVC.model.data, versionVC.platform.type)}" />
+                </h:panelGrid>
+            </h:panelGrid>
+            <div align="right">
+                <p:commandButton id="versionCreateButton"
+                                 icon="icon-button-create"
+                                 onclick="versionTableWidget.unselectAllRows()"
+                                 update=":formVersion:versionPanel"
+                                 value="#{appMsg['version.action.create.value']}"
+                                 title="#{appMsg['version.action.create.title']}"
+                                 rendered="#{versionVC.createAction.available}"
+                                 disabled="#{!versionVC.createAction.enabled}"
+                                 actionListener="#{versionVC.createAction.execute}"/>                  
+                <p:commandButton id="versionReleaseButton" 
+                                 value="#{appMsg['version.action.release.value']}"
+                                 title="#{appMsg['version.action.release.title']}"
+                                 icon="icon-button-ok" 
+                                 update=":formVersion:versionPanel :versionTable" 
+                                 rendered="#{versionVC.releaseAction.available}"
+                                 disabled="#{!versionVC.releaseAction.enabled}"
+                                 actionListener="#{versionVC.releaseAction.execute}"/> 
+                <p:commandButton id="versionUnreleaseButton" 
+                                 value="#{appMsg['version.action.unrelease.value']}"
+                                 title="#{appMsg['version.action.unrelease.title']}"
+                                 icon="icon-button-ok" 
+                                 update=":formVersion:versionPanel :versionTable" 
+                                 rendered="#{versionVC.unreleaseAction.available}"
+                                 disabled="#{!versionVC.unreleaseAction.enabled}"
+                                 actionListener="#{versionVC.unreleaseAction.execute}"/>
+                <p:commandButton id="versionDeleteButton" 
+                                 value="#{appMsg['version.action.delete.value']}"
+                                 title="#{appMsg['version.action.delete.title']}"
+                                 icon="icon-button-delete" 
+                                 update=":formVersion:versionPanel :versionTable" 
+                                 rendered="#{versionVC.deleteAction.available}"
+                                 disabled="#{!versionVC.deleteAction.enabled}"
+                                 actionListener="#{versionVC.deleteAction.execute}"/>                
+                <p:commandButton id="versionSaveButton" 
+                                 value="#{appMsg['version.action.save.value']}"
+                                 title="#{appMsg['version.action.save.title']}"
+                                 icon="icon-button-save" 
+                                 update=":formVersion:versionPanel :versionTable" 
+                                 rendered="#{versionVC.saveAction.available}"
+                                 disabled="#{!versionVC.saveAction.enabled}"
+                                 actionListener="#{versionVC.saveAction.execute}"/>
+            </div>              
+        </p:panel>        
+    </h:form>
+
+    <!-- PACKAGE DIALOG -->
+    <ui:include src="dialog/package.xhtml">
+        <ui:param name="dialog_id" value="packageDialog"/>
+        <ui:param name="parentPackageVC" value="#{versionVC}" />
+        <ui:param name="dialog_onsave_update" value=":formVersion:versionPanelUpload" />        
+    </ui:include>
+
+</ui:composition>

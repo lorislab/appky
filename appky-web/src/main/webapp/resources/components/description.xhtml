@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <composite:attribute name="update" required="true" />
+        <composite:attribute name="buttonTitle"/>
+        <composite:attribute name="disabled" default="false"/>
+        <composite:attribute name="controls" default="bold italic underline strikethrough bullets numbering" />
+        <composite:attribute name="width" default="600" />
+        <composite:attribute name="descriptionVC" required="true"
+                             class="com.ajkaandrej.mstore.web.app.view.DescriptionViewController"/>
+    </composite:interface>
+    
+    <composite:implementation>
+        <h:panelGroup id="panelGroup">  
+            <p:tabView id="#{cc.attrs.id}TabView" var="description"
+                       dynamic="true" cache="true"
+                       rendered="#{!cc.attrs.disabled}"
+                       style="width: 632px"
+                       value="#{cc.attrs.descriptionVC.descriptions}">
+
+                <p:ajax event="tabClose" listener="#{cc.attrs.descriptionVC.onTabClose}" update="#{cc.attrs.update}"/> 
+
+                <p:tab id="descriptionTab" title="#{description.locale.displayName}" 
+                       disabled="#{cc.attrs.disabled}"
+                       closable="#{description.locale != cc.attrs.descriptionVC.defaultLocale}">  
+                    <p:editor id="descriptionEditor"
+                      value="#{description.value}" 
+                      controls="#{cc.attrs.controls}"
+                      rendered="#{!cc.attrs.disabled}"
+                      width="#{cc.attrs.width}"/>                             
+                </p:tab>
+            </p:tabView>
+            <p:tabView id="#{cc.attrs.id}TabView2"
+                       dynamic="true" 
+                       cache="true"                       
+                       style="width: 632px"
+                       rendered="#{cc.attrs.disabled}">
+                <p:tab id="descriptionEmptyTab" title="Language" disabled="true">  
+                    <h:outputText id="descriptionEditorEmpty" value="No description."/>                                
+                </p:tab>
+            </p:tabView>            
+            <center>
+                <p:selectOneMenu id="#{cc.attrs.id}Langs" 
+                                 style="top:8px; text-align: left"
+                                 value="#{cc.attrs.descriptionVC.locale}" 
+                                 rendered="#{not empty cc.attrs.descriptionVC.locales and !cc.attrs.disabled}">
+                    <f:selectItems value="#{cc.attrs.descriptionVC.locales}" var="loc" itemLabel="#{loc.displayLanguage}" itemValue="#{loc}" />
+                </p:selectOneMenu>
+                <p:selectOneMenu id="#{cc.attrs.id}LangsEmpty" 
+                                 style="top:8px; text-align: left"
+                                 disabled="true"
+                                 rendered="#{empty cc.attrs.descriptionVC.locales or cc.attrs.disabled}">
+                    <f:selectItem itemLabel="--------" itemValue="" />
+                </p:selectOneMenu>                  
+                <p:commandButton id="#{cc.attrs.id}AddButton" 
+                                 icon="icon-button-add"       
+                                 title="#{cc.attrs.buttonTitle}"
+                                 disabled="#{empty cc.attrs.descriptionVC.locales or cc.attrs.disabled}"
+                                 update="#{cc.attrs.update}"                                                              
+                                 actionListener="#{cc.attrs.descriptionVC.add}" />     
+            </center>            
+        </h:panelGroup>
+    </composite:implementation>
+</html>

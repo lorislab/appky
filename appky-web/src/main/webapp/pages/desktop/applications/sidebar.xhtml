@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!-- CREATE GROUP DIALOG -->
+        <h:panelGrid columns="2">
+            <p:commandButton id="createGroupButton" 
+                             icon="icon-group-add" 
+                             title="#{appMsg['group.action.create.title']}"
+                             rendered="#{groupPopUpVC.createAction.available}"
+                             onclick="createGroupDialog.show()" />   
+            <p:commandButton id="refreshGroupButton" 
+                             icon="icon-button-refresh" 
+                             title="#{appMsg['tree.action.search.title']}"
+                             actionListener="#{treeVC.searchAction.execute}" 
+                             disabled="#{!treeVC.searchAction.enabled}"
+                             rendered="#{treeVC.searchAction.available}"
+                             update=":groupsTreeForm:groupsTree :contentApplicationTabView"/>
+        </h:panelGrid>
+
+    <!-- TREE -->
+    <h:form id="groupsTreeForm"> 
+
+        <p:tree id="groupsTree" 
+                value="#{treeVC.root}" 
+                var="node"  
+                selectionMode="single"                  
+                selection="#{treeVC.selectedNode}"  
+                dynamic="true"
+                style="min-height: 300px">  
+
+            <p:ajax event="select" update=":contentApplicationTabView" />
+            <p:ajax event="expand" listener="#{treeVC.onNodeExpand}" />  
+            
+            <p:treeNode type="Group" icon="icon-group">  
+                <h:outputText id="groupId" value="#{node.name}" title="#{appMsg['tree.node.group.title']}"/>                 
+            </p:treeNode>
+
+            <p:treeNode type="Application" icon="icon-app">  
+                <h:outputText value="#{node.name}" title="#{appMsg['tree.node.application.title']}"/>  
+            </p:treeNode>
+
+            <p:treeNode type="ANDROID" icon="icon-platform-android" >  
+                <h:outputText value="Android" title="#{appMsg['tree.node.android.title']}"/>  
+            </p:treeNode>
+
+            <p:treeNode type="IOS" icon="icon-platform-apple">  
+                <h:outputText value="iOS" title="#{appMsg['tree.node.ios.title']}"/>  
+            </p:treeNode>
+
+            <p:treeNode type="WINDOWS8" icon="icon-platform-windows">  
+                <h:outputText value="Windows" title="#{appMsg['tree.node.windows.title']}"/>  
+            </p:treeNode>
+            
+            <p:treeNode type="Version" icon="icon-version">  
+                <h:outputText value="#{appMsg['tree.node.version.value']}" title="#{appMsg['tree.node.version.title']}"/>  
+            </p:treeNode>            
+        </p:tree>   
+    </h:form>
+
+    <!-- CREATE GROUP DIALOG -->
+    <p:dialog  header="#{appMsg['group.dialog.title']}" 
+               widgetVar="createGroupDialog" 
+               resizable="false"  
+               width="300" 
+               id="createGroupDialogId" 
+               modal="true">  
+        <h:form id="formCreateGroupDialog" >
+            <h:panelGrid id="createGroupDialogPanel" columns="3" cellpadding="4">                 
+
+                <h:outputText value="#{appMsg['group.dialog.name.value']}" 
+                              title="#{appMsg['group.dialog.name.title']}" />  
+                <p:inputText id="createGroupDialogInput" 
+                             value="#{groupPopUpVC.name}" 
+                             size="27"
+                             title="#{appMsg['group.dialog.name.title']}">  
+                    <p:ajax event="keyup" update="createGroupButton" />
+                </p:inputText>
+                <p:commandButton icon="icon-button-ok" 
+                                 id="createGroupButton"
+                                 update="createGroupDialogInput createGroupButton :groupsTreeForm:groupsTree"
+                                 title="#{appMsg['group.dialog.action.ok.title']}"
+                                 disabled="#{!groupPopUpVC.createAction.enabled}"
+                                 rendered="#{groupPopUpVC.createAction.available}"
+                                 actionListener="#{groupPopUpVC.createAction.execute}" 
+                                 oncomplete="createGroupDialog.hide()" />
+            </h:panelGrid> 
+
+        </h:form>
+    </p:dialog>
+</ui:composition>
