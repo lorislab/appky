@@ -16,7 +16,7 @@
 package org.lorislab.appky.web.admin.user.view;
 
 
-import org.lorislab.appky.util.PasswordUtil;
+import org.lorislab.appky.web.util.PasswordUtil;
 import org.lorislab.appky.web.admin.user.action.UserResetPasswordAction;
 import java.io.Serializable;
 import javax.ejb.EJB;

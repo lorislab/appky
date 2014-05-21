@@ -41,12 +41,11 @@
 	
 	<!-- MODULES -->
 	<modules>
-		<module>appky-config</module>
 		<module>appky-application</module>
 		<module>appky-email</module>
-		<module>appky-tracking</module>
 		<module>appky-process</module>
 		<module>appky-web</module>
+		<module>appky-ear</module>
 	</modules>
 	
 	<dependencyManagement>

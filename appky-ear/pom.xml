@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    
+	<parent>
+		<groupId>org.lorislab.appky</groupId>
+		<artifactId>appky</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+		
+	<artifactId>appky-ear</artifactId>
+	<packaging>ear</packaging>    
+	<name>appky-ear</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-application</artifactId>
+			<type>ejb</type>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-email</artifactId>
+			<type>ejb</type>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-process</artifactId>
+			<type>ejb</type>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-web</artifactId>
+			<type>war</type>
+			<version>${project.version}</version>
+		</dependency>		
+	</dependencies>  
+    
+	
+	<build>
+		<finalName>appky</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<version>6</version>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>					
+					<displayName>appky</displayName>
+					<modules>        
+						<ejbModule>
+							<groupId>org.lorislab.appky</groupId>
+							<artifactId>appky-application</artifactId>
+							<bundleFileName>appky-application.jar</bundleFileName>
+						</ejbModule>
+						<ejbModule>
+							<groupId>org.lorislab.appky</groupId>
+							<artifactId>appky-email</artifactId>
+							<bundleFileName>appky-email.jar</bundleFileName>
+						</ejbModule> 
+						<ejbModule>
+							<groupId>org.lorislab.appky</groupId>
+							<artifactId>appky-process</artifactId>
+							<bundleFileName>appky-process.jar</bundleFileName>
+						</ejbModule> 
+						<webModule>
+							<groupId>org.lorislab.appky</groupId>
+							<artifactId>appky-web</artifactId>
+							<bundleFileName>appky-web.war</bundleFileName>
+							<contextRoot>appky</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>				
+			</build>
+		</profile>
+		<profile>
+			<id>deploy</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}" tofile="${server.home.dir}/standalone/deployments/${project.build.finalName}.${project.packaging}" />
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build> 			
+		</profile>
+	</profiles>	
+	
+</project>

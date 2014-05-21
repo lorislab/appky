@@ -16,7 +16,7 @@
 package org.lorislab.appky.web.login.view;
 
 
-import org.lorislab.appky.util.PasswordUtil;
+import org.lorislab.appky.web.util.PasswordUtil;
 import org.lorislab.appky.web.login.action.RegisterAction;
 import java.io.Serializable;
 import java.util.logging.Level;

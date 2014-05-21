@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.rs;
+package org.lorislab.appky.web.rs;
 
 import java.util.List;
 import javax.ejb.EJB;

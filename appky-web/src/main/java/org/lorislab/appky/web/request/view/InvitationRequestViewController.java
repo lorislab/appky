@@ -16,7 +16,7 @@
 package org.lorislab.appky.web.request.view;
 
 
-import org.lorislab.appky.util.PasswordUtil;
+import org.lorislab.appky.web.util.PasswordUtil;
 import org.lorislab.appky.web.Navigation;
 import org.lorislab.appky.web.request.action.InvitationCancelAction;
 import org.lorislab.appky.web.request.action.InvitationSignUpAction;

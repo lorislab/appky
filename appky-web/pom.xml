@@ -23,21 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.lorislab.appky</groupId>
-			<artifactId>appky-config</artifactId>
-			<type>ejb-client</type>
-			<scope>provided</scope>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.lorislab.appky</groupId>
 			<artifactId>appky-email</artifactId>
-			<type>ejb-client</type>
-			<scope>provided</scope>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.lorislab.appky</groupId>
-			<artifactId>appky-tracking</artifactId>
 			<type>ejb-client</type>
 			<scope>provided</scope>
 			<version>${project.version}</version>

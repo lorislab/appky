@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.factory;
+package org.lorislab.appky.process.factory;
 
 
 import java.util.ArrayList;

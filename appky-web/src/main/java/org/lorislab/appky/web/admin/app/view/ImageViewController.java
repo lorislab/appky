@@ -16,7 +16,7 @@
 package org.lorislab.appky.web.admin.app.view;
 
 
-import org.lorislab.appky.util.ImageUtil;
+import org.lorislab.appky.web.util.ImageUtil;
 import org.lorislab.appky.web.admin.app.action.ImageAcceptAction;
 import org.lorislab.appky.web.admin.app.action.ImageCancelAction;
 import org.lorislab.appky.web.admin.app.action.ImageUploadAction;

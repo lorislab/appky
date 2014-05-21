@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.util;
+package org.lorislab.appky.web.util;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;

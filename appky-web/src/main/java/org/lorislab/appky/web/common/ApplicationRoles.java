@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.common;
+package org.lorislab.appky.web.common;
 
 /**
  * The application roles.

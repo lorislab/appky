@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.log;
+package org.lorislab.appky.web.log;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import org.kohsuke.MetaInfServices;
 import org.lorislab.jel.log.parameters.ClassLogParameter;
-import org.primefaces.event.SelectEvent;
+import org.primefaces.event.FileUploadEvent;
 
 /**
- * The select event logger parameter.
+ * The file upload event logger parameter.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @MetaInfServices
-public class SelectEventLogParameter implements ClassLogParameter {
+public class FileUploadEventLogParameter implements ClassLogParameter {
 
     /**
      * {@inheritDoc}
@@ -35,7 +36,7 @@ public class SelectEventLogParameter implements ClassLogParameter {
     @Override
     public List<Class<?>> getClasses() {
         List<Class<?>> result = new ArrayList<>();
-        result.add(SelectEvent.class);
+        result.add(FileUploadEvent.class);
         return result;
     }
 
@@ -44,7 +45,7 @@ public class SelectEventLogParameter implements ClassLogParameter {
      */
     @Override
     public boolean isResult() {
-        return false;
+        return true;
     }
 
     /**
@@ -52,7 +53,10 @@ public class SelectEventLogParameter implements ClassLogParameter {
      */
     @Override
     public Object getObject(Object parameter) {
-        SelectEvent event = (SelectEvent) parameter;
-        return event.getObject();
+        FileUploadEvent event = (FileUploadEvent) parameter;
+        if (event.getFile() != null) {
+            return event.getClass().getSimpleName() + ":" + event.getFile().getFileName();
+        }
+        return event.getClass().getSimpleName() + ":nofile";
     }
 }

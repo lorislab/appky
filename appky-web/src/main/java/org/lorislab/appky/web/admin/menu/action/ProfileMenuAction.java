@@ -15,7 +15,7 @@
  */
 package org.lorislab.appky.web.admin.menu.action;
 
-import org.lorislab.appky.common.ApplicationRoles;
+import org.lorislab.appky.web.common.ApplicationRoles;
 import org.lorislab.appky.web.Navigation;
 import org.lorislab.appky.web.admin.menu.view.MenuViewController;
 import org.lorislab.jel.jsf.util.FacesUtil;

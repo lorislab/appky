@@ -15,7 +15,7 @@
  */
 package org.lorislab.appky.web.admin.profile.view;
 
-import org.lorislab.appky.util.PasswordUtil;
+import org.lorislab.appky.web.util.PasswordUtil;
 import org.lorislab.appky.web.admin.profile.action.ChangePasswordAction;
 import java.io.Serializable;
 import java.util.logging.Level;

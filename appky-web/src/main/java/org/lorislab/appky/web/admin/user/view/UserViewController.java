@@ -16,7 +16,7 @@
 package org.lorislab.appky.web.admin.user.view;
 
 import org.lorislab.appky.web.admin.role.view.RoleConverterViewController;
-import org.lorislab.appky.factory.CommonObjectFactory;
+import org.lorislab.appky.process.factory.CommonObjectFactory;
 import org.lorislab.appky.web.admin.user.action.UserCreateAction;
 import org.lorislab.appky.web.admin.user.action.UserDeleteAction;
 import org.lorislab.appky.web.admin.user.action.UserSaveAction;

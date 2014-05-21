@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej_Petras.
+ * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,33 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.log;
+package org.lorislab.appky.web.rs;
 
-import org.lorislab.jel.log.parameters.LogParameter;
-import org.lorislab.jel.log.util.ReflectionUtil;
-
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
- * The default reflection logger parameter.
+ * The store rest service application.
  * 
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class DefaultReflectionLogParameter implements  LogParameter {
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isResult() {
-        return true;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getObject(Object parameter) {
-        return ReflectionUtil.toString(parameter);
-    }
+@ApplicationPath("rest")
+public class AppkyRestApplication extends Application {
     
 }

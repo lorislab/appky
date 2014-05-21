@@ -15,7 +15,7 @@
  */
 package org.lorislab.appky.web.mobile.view;
 
-import org.lorislab.appky.common.ApplicationRoles;
+import org.lorislab.appky.web.common.ApplicationRoles;
 import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
 import org.lorislab.appky.web.mobile.action.RefreshApplicationAction;
 import java.io.Serializable;
