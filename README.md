@@ -1,4 +1,4 @@
 appky
 =====
 
-Mobile application repository
+Mobile application store.
