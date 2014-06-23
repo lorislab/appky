@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import javax.ejb.EJB;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import org.lorislab.appky.process.ejb.UserProcessServiceLocal;
+import org.lorislab.appky.process.ejb.UserProcessService;
 
 /**
  * The session listener.
@@ -39,7 +39,7 @@ public class StoreSessionListener implements HttpSessionListener {
      * The user process service.
      */
     @EJB
-    private UserProcessServiceLocal userProcessService;
+    private UserProcessService userProcessService;
 
     /**
      * {@inheritDoc}

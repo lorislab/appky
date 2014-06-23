@@ -1,5 +1,5 @@
 <beans>
    <interceptors>
-      <class>com.ajkaandrej.interceptors.web.FacesInterceptor</class>
+      <class>org.lorislab.jel.jsf.interceptor.FacesInterceptor</class>
    </interceptors>
 </beans>

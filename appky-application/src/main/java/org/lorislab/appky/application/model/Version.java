@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ import org.lorislab.jel.jpa.model.TraceablePersistent;
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @Entity
-@Table(name = "ST_VERSION")
+@Table(name = "AY_VERSION")
 public class Version extends TraceablePersistent {
 
     /**
@@ -88,7 +88,7 @@ public class Version extends TraceablePersistent {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_VERSION_DESC",
+    @JoinTable(name = "AY_VERSION_DESC",
     joinColumns = {
         @JoinColumn(name = "C_VERSION")},
     inverseJoinColumns = {

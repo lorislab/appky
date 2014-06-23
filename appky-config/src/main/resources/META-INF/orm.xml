@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings 
+  xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_0.xsd"
+  version="2.0">
+	
+	<package>org.lorislab.barn.db.model</package>
+	<entity class="DBConfig" metadata-complete="false">
+		<table name="AY_BARN_CONF"></table>
+	</entity>
+	<entity class="DBAttribute" metadata-complete="false">
+		<table name="AY_BARN_ATTR"></table>
+	</entity>
+	<entity class="DBApplication" metadata-complete="false">
+		<table name="AY_BARN_APP"></table>
+	</entity>	
+</entity-mappings>

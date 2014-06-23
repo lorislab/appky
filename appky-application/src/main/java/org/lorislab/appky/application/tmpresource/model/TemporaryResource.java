@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import org.lorislab.jel.jpa.model.Persistent;
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @Entity
-@Table(name = "TMP_RESOURCE")
+@Table(name = "AY_RESOURCE")
 public class TemporaryResource extends Persistent {
 
     /**

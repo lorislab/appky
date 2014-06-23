@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 package org.lorislab.appky.web.admin.preferences.view;
 
 
-import org.lorislab.appky.web.admin.preferences.action.ConfigReloadAction;
-import org.lorislab.appky.web.admin.preferences.action.ConfigSaveAction;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.lorislab.appky.config.ejb.ConfigServiceLocal;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
-import org.lorislab.appky.config.model.Config;
+import org.lorislab.appky.web.admin.preferences.action.ConfigReloadAction;
+import org.lorislab.appky.web.admin.preferences.action.ConfigSaveAction;
+import org.lorislab.barn.api.model.Config;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.util.FacesResourceUtil;
-import org.lorislab.jel.jsf.util.FacesUtil;
-import org.lorislab.jel.jsf.view.AbstractTableViewController;
 
 /**
  * The configuration view controller.
@@ -38,7 +36,7 @@ import org.lorislab.jel.jsf.view.AbstractTableViewController;
  */
 @Named("configVC")
 @SessionScoped
-public class ConfigViewController extends AbstractTableViewController<Config> {
+public class ConfigViewController implements Serializable {
 
     /**
      * The UID for this class.
@@ -48,12 +46,8 @@ public class ConfigViewController extends AbstractTableViewController<Config> {
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
-    /**
-     * The configuration model service.
-     */
-    @EJB
-    private ConfigServiceLocal service;
+    private ConfigurationService configService;
+    
     /**
      * The configuration save and reload action.
      */
@@ -89,51 +83,49 @@ public class ConfigViewController extends AbstractTableViewController<Config> {
         return reloadAction;
     }
 
-    /**
-     * Saves the configuration.
-     */
-    @FacesServiceMethod
-    public void save(Config config) throws Exception {
-        config = service.saveConfig(config);
-        this.tableUpdate(config);
-    }
-
-    /**
-     * Reloads the configuration.
-     */
-    @FacesServiceMethod
-    public void reload() throws Exception {
-        configService.reloadConfiguration();
-        search();
-    }
+//    /**
+//     * Saves the configuration.
+//     */
+//    @FacesServiceMethod
+//    public void save(Config config) throws Exception {
+//        config = service.saveConfig(config);
+//        this.tableUpdate(config);
+//    }
+//
+//    /**
+//     * Reloads the configuration.
+//     */
+//    @FacesServiceMethod
+//    public void reload() throws Exception {
+//        configService.
+//        search();
+//    }
 
     /**
      * Initialise the data for the view controller.
      *
      */
-    @PostConstruct
-    public void postConstruct() {
-        try {
-            search();
-        } catch (Exception ex) {
-            FacesResourceUtil.handleExceptionMessage(ex);
-        }
-    }
+//    @PostConstruct
+//    public void postConstruct() {
+//        try {
+//            search();
+//        } catch (Exception ex) {
+//            FacesResourceUtil.handleExceptionMessage(ex);
+//        }
+//    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @FacesServiceMethod
-    public void search() throws Exception {
-        super.search();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<Config> doSearch() throws Exception {
-        return service.findAllConfig();
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @FacesServiceMethod
+//    public void search() throws Exception {
+//        super.search();
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     */
+//    protected List<Config> doSearch() throws Exception {
+//        return service.findAllConfig();
+//    }
 }

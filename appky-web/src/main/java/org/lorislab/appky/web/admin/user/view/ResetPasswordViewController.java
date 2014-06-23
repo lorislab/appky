@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.UserPasswordServiceLocal;
+import org.lorislab.appky.process.ejb.UserPasswordProcessService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 
 /**
@@ -55,7 +55,7 @@ public class ResetPasswordViewController implements Serializable {
      * The user password service.
      */
     @EJB
-    private UserPasswordServiceLocal service;
+    private UserPasswordProcessService service;
     /**
      * The user view controller.
      */

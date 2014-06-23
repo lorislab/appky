@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    
+	<parent>
+		<groupId>org.lorislab.appky</groupId>
+		<artifactId>appky</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+		
+	<artifactId>appky-config</artifactId>
+	<packaging>ejb</packaging>    
+	<name>appky-config</name>        
+    
+	<dependencies>					
+		<!--BARN--> 		
+		<dependency>
+			<groupId>org.lorislab.barn</groupId>
+			<artifactId>barn-db</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.barn</groupId>
+			<artifactId>barn-standalone-ejb</artifactId>
+		</dependency>		
+	</dependencies>  
+    
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>org.lorislab.barn:barn-db</include>
+									<include>org.lorislab.barn:barn-standalone-ejb</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import org.lorislab.appky.process.registration.ejb.RegistrationServiceLocal;
+import org.lorislab.appky.process.registration.ejb.RegistrationService;
 import org.lorislab.appky.process.registration.factory.RegistrationFactory;
 import org.lorislab.appky.process.registration.model.Registration;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
@@ -66,7 +66,7 @@ public class RegistrationViewController implements Serializable {
      * The registration service.
      */
     @EJB
-    private RegistrationServiceLocal registrationService;
+    private RegistrationService registrationService;
 
     /**
      * The default constructor.

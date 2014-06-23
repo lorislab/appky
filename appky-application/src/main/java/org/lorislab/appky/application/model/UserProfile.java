@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import org.lorislab.jel.jpa.model.TraceablePersistent;
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @Entity
-@Table(name = "CORE_USER_PROFILE")
+@Table(name = "AY_USER_PROFILE")
 public class UserProfile extends TraceablePersistent {
 
     /**
@@ -80,7 +80,7 @@ public class UserProfile extends TraceablePersistent {
      * The user roles list.
      */
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(name = "CORE_USER_ROLES",
+    @JoinTable(name = "AY_USER_ROLES",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"C_USER_ID", "C_ROLE_ID"})},
     joinColumns = {

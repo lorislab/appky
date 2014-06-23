@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ import javax.inject.Named;
 import org.lorislab.appky.application.criteria.ApplicationSearchCriteria;
 import org.lorislab.appky.application.criteria.GroupSearchCriteria;
 import org.lorislab.appky.application.criteria.PlatformSearchCriteria;
-import org.lorislab.appky.application.ejb.ApplicationServiceLocal;
-import org.lorislab.appky.application.ejb.GroupServiceLocal;
-import org.lorislab.appky.application.ejb.PlatformServiceLocal;
+import org.lorislab.appky.application.ejb.ApplicationService;
+import org.lorislab.appky.application.ejb.GroupService;
+import org.lorislab.appky.application.ejb.PlatformService;
 import org.lorislab.appky.application.factory.ApplicationObjectFactory;
 import org.lorislab.appky.application.model.Application;
 import org.lorislab.appky.application.model.Group;
@@ -76,17 +76,17 @@ public class TreeViewController implements Serializable {
      * The group service.
      */
     @EJB
-    private GroupServiceLocal service;
+    private GroupService service;
     /**
      * The application service.
      */
     @EJB
-    private ApplicationServiceLocal appService;
+    private ApplicationService appService;
     /**
      * The platform service.
      */
     @EJB
-    private PlatformServiceLocal platformService;
+    private PlatformService platformService;
     /**
      * The selected node.
      */

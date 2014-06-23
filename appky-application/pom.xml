@@ -18,7 +18,7 @@
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
 				<artifactId>maven-processor-plugin</artifactId>                
-			</plugin>            
+			</plugin>
 		</plugins>
 	</build>
     

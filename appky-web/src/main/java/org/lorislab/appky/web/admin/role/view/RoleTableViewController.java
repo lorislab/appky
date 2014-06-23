@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.lorislab.appky.application.criteria.RoleSearchCriteria;
-import org.lorislab.appky.application.ejb.RoleServiceLocal;
+import org.lorislab.appky.application.ejb.RoleService;
 import org.lorislab.appky.application.model.Role;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractTableSearchViewController;
@@ -48,7 +48,7 @@ public class RoleTableViewController extends AbstractTableSearchViewController<R
      * The role service.
      */
     @EJB
-    private RoleServiceLocal service;
+    private RoleService service;
 
     /**
      * The default constructor.

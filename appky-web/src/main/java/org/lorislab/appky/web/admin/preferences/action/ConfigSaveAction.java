@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.lorislab.appky.web.admin.preferences.action;
 
-import org.lorislab.appky.config.model.Config;
+
 import org.lorislab.appky.web.admin.preferences.view.ConfigViewController;
 import org.lorislab.jel.jsf.view.AbstractViewControllerAction;
 
@@ -43,18 +43,10 @@ public class ConfigSaveAction extends AbstractViewControllerAction<ConfigViewCon
 //    /**
 //     * {@inheritDoc}
 //     */
-//    @Override
-//    public boolean isEnabled() {
-//        return !getParent().isEmpty();
+//    public Object execute(Config config) throws Exception {
+//        getParent().save(config);
+//        return null;
 //    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object execute(Config config) throws Exception {
-        getParent().save(config);
-        return null;
-    }
     
     /**
      * {@inheritDoc}

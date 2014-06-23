@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-    <context-root>store</context-root>
-    <security-domain>mstore-domain</security-domain>
+    <security-domain>appky-domain</security-domain>
 </jboss-web>

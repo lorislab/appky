@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import org.lorislab.appky.application.model.Role;
 import org.lorislab.jel.jpa.model.TraceablePersistent;
 
 /**
@@ -38,7 +37,7 @@ import org.lorislab.jel.jpa.model.TraceablePersistent;
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @Entity
-@Table(name = "ST_GROUP")
+@Table(name = "AY_GROUP")
 public class Group extends TraceablePersistent {
 
     /**
@@ -77,7 +76,7 @@ public class Group extends TraceablePersistent {
      */
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_GROUP_ROLE",
+    @JoinTable(name = "AY_GROUP_ROLE",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"C_GROUP_ID", "C_ROLE_ID"})},
     joinColumns = {
@@ -90,7 +89,7 @@ public class Group extends TraceablePersistent {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_GROUP_TITLE",
+    @JoinTable(name = "AY_GROUP_TITLE",
     joinColumns = {
         @JoinColumn(name = "C_GROUP")},
     inverseJoinColumns = {
@@ -101,7 +100,7 @@ public class Group extends TraceablePersistent {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_GROUP_DESC",
+    @JoinTable(name = "AY_GROUP_DESC",
     joinColumns = {
         @JoinColumn(name = "C_GROUP")},
     inverseJoinColumns = {

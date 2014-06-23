@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,21 @@
  */
 package org.lorislab.appky.web.admin.app.view;
 
-import org.lorislab.appky.web.admin.app.action.ApplicationDeleteAction;
-import org.lorislab.appky.web.admin.app.action.ApplicationSaveAction;
-import org.lorislab.appky.web.admin.role.view.RoleConverterViewController;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.ApplicationServiceLocal;
+import org.lorislab.appky.application.ejb.ApplicationService;
 import org.lorislab.appky.application.model.Application;
 import org.lorislab.appky.application.model.Role;
-import org.lorislab.appky.application.trash.ejb.TrashServiceLocal;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
+import org.lorislab.appky.application.trash.ejb.TrashService;
 import org.lorislab.appky.process.config.ServerConfiguration;
+import org.lorislab.appky.web.admin.app.action.ApplicationDeleteAction;
+import org.lorislab.appky.web.admin.app.action.ApplicationSaveAction;
+import org.lorislab.appky.web.admin.role.view.RoleConverterViewController;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractEntityViewController;
 import org.primefaces.model.DualListModel;
@@ -51,17 +51,17 @@ public class ApplicationViewController extends AbstractEntityViewController<Appl
      * The application service.
      */
     @EJB
-    private ApplicationServiceLocal service;
+    private ApplicationService service;
     /**
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
+    private ConfigurationService configService;
     /**
      * The trash service.
      */
     @EJB
-    private TrashServiceLocal trashService;
+    private TrashService trashService;
     /**
      * The tree view controller.
      */
@@ -171,7 +171,7 @@ public class ApplicationViewController extends AbstractEntityViewController<Appl
             if (model != null) {
                 applicationRoles = roleConverterVC.createRoleDualListModel(model.getRoles(), false);
 
-                ServerConfiguration config = configService.loadConfiguration(ServerConfiguration.class);
+                ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
                 List<Locale> serverLangs = config.getServerLangs();
                 Locale defaultLocale = config.getServerLang();
                 descriptionVC.open(model.getDescriptions(), serverLangs, defaultLocale);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,14 @@
  */
 package org.lorislab.appky.process.config;
 
+import java.io.Serializable;
+
 /**
  * The process configuration.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ProcessApplicationConfiguration extends AbstractProcessConfiguration {
+public class ProcessApplicationConfiguration implements Serializable {
 
     /**
      * The UID for this class.
@@ -29,28 +31,11 @@ public class ProcessApplicationConfiguration extends AbstractProcessConfiguratio
     /**
      * The template for the application update email.
      */
-    private static final String CONFIG_EMAIL_APP_UPDATE_TEMPLATE = "template.application.update.email";
-    /**
-     * The template for the application update email default value.
-     */
-    private static final String CONFIG_EMAIL_APP_UPDATE_TEMPLATE_DEFAULT = "app.update.email";
+    private String templateApplicationUpdateEmail = "app.update.email";
     /**
      * The temporary resource validation time.
      */
-    private static final String CONF_RESOURCE_VALIDATE_TO = "tmp.resource.validateTo";
-    /**
-     * The temporary resource validation time default value.
-     */
-    private static final String CONF_RESOURCE_VALIDATE_TO_DEFAULT = "1";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void setDefaultValues() {
-        addValue(CONF_RESOURCE_VALIDATE_TO, CONF_RESOURCE_VALIDATE_TO_DEFAULT);
-        addValue(CONFIG_EMAIL_APP_UPDATE_TEMPLATE, CONFIG_EMAIL_APP_UPDATE_TEMPLATE_DEFAULT);
-    }
+    private int resourceValidateTo = 1;
   
     /**
      * Gets the temporary resource validation time.
@@ -58,15 +43,35 @@ public class ProcessApplicationConfiguration extends AbstractProcessConfiguratio
      * @return the temporary resource validation time.
      */
     public int getResourceValidateTo() {
-        return getIntegerValue(CONF_RESOURCE_VALIDATE_TO);
+        return resourceValidateTo;
     }
 
+    /**
+     * Sets the temporary resource validation time.
+     *
+     * @param resourceValidateTo the temporary resource validation time.
+     */    
+    public void setResourceValidateTo(int resourceValidateTo) {
+        this.resourceValidateTo = resourceValidateTo;
+    }    
+    
     /**
      * The template for the application update email.
      *
      * @return the template for the application update email.
      */
     public String getTemplateApplicationUpdateEmail() {
-        return getStringValue(CONFIG_EMAIL_APP_UPDATE_TEMPLATE);
+        return templateApplicationUpdateEmail;
     }
+
+    /**
+     * The template for the application update email.
+     *
+     * @param templateApplicationUpdateEmail the template for the application update email.
+     */    
+    public void setTemplateApplicationUpdateEmail(String templateApplicationUpdateEmail) {
+        this.templateApplicationUpdateEmail = templateApplicationUpdateEmail;
+    }
+    
+    
 }

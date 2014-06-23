@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.lorislab.appky.web.admin.profile.view;
 
-import org.lorislab.appky.web.util.PasswordUtil;
-import org.lorislab.appky.web.admin.profile.action.ChangePasswordAction;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +22,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.UserPasswordServiceLocal;
+import org.lorislab.appky.process.ejb.UserPasswordProcessService;
+import org.lorislab.appky.web.admin.profile.action.ChangePasswordAction;
+import org.lorislab.appky.web.util.PasswordUtil;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 
 /**
@@ -64,7 +64,7 @@ public class ChangePasswordViewController implements Serializable {
      * The user password service.
      */
     @EJB
-    private UserPasswordServiceLocal userPasswordService;
+    private UserPasswordProcessService userPasswordService;
     /**
      * The user profile view controller.
      */

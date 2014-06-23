@@ -13,7 +13,22 @@
 	<packaging>ejb</packaging>    
 	<name>appky-email</name>        
     
-	<dependencies>	
+	<dependencies>
+		<dependency>
+			<groupId>org.lorislab.appky</groupId>
+			<artifactId>appky-application</artifactId>
+			<type>ejb-client</type>
+			<scope>provided</scope>
+			<version>${project.version}</version>
+		</dependency>
+					
+		<!-- BARN -->
+		<dependency>
+			<groupId>org.lorislab.barn</groupId>
+			<artifactId>barn-api</artifactId>	
+			<scope>provided</scope>		
+		</dependency>
+		
 		<!-- JEL -->
 		<dependency>
 			<groupId>org.lorislab.jel</groupId>
@@ -38,6 +53,11 @@
 			<optional>true</optional>
 		</dependency>	
 		
+		<!-- MVEL -->	
+		<dependency>
+			<groupId>org.mvel</groupId>
+			<artifactId>mvel2</artifactId>
+		</dependency>		
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>

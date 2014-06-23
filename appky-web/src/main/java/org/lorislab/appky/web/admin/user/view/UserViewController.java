@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.UserProfileServiceLocal;
+import org.lorislab.appky.application.ejb.UserProfileService;
 import org.lorislab.appky.application.factory.UserObjectFactory;
 import org.lorislab.appky.application.model.Role;
 import org.lorislab.appky.application.model.UserProfile;
-import org.lorislab.appky.application.trash.ejb.TrashServiceLocal;
+import org.lorislab.appky.application.trash.ejb.TrashService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractEntityViewController;
 import org.primefaces.event.SelectEvent;
@@ -51,7 +51,7 @@ public class UserViewController extends AbstractEntityViewController<UserProfile
      * The user profile service.
      */
     @EJB
-    private UserProfileServiceLocal service;
+    private UserProfileService service;
     /**
      * The user table view controller.
      */
@@ -61,7 +61,7 @@ public class UserViewController extends AbstractEntityViewController<UserProfile
      * The trash service.
      */
     @EJB
-    private TrashServiceLocal trashService;
+    private TrashService trashService;
     /**
      * The role converter view controller.
      */

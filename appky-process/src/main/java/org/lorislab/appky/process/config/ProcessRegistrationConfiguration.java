@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,14 @@
  */
 package org.lorislab.appky.process.config;
 
+import java.io.Serializable;
+
 /**
  * The registration configuration model.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ProcessRegistrationConfiguration extends AbstractProcessConfiguration {
+public class ProcessRegistrationConfiguration implements Serializable {
 
     /**
      * The UID for this class.
@@ -29,82 +31,35 @@ public class ProcessRegistrationConfiguration extends AbstractProcessConfigurati
     /**
      * The registration interval.
      */
-    private static final String CONF_REG_INTERVAL = "registration.interval";
-    /**
-     * The registration interval default.
-     */
-    private static final String CONF_REG_INTERVAL_DEFAULT = "30";
+    private int registrationInterval = 30;
     /**
      * Sends the registration email flag.
      */
-    private static final String CONF_REG_SEND_EMAIL = "registration.sendEmail";
-    /**
-     * Sends the registration email flag default.
-     */
-    private static final String CONF_REG_SEND_EMAIL_DEFAULT = "true";
+    private boolean sendRegistrationEmail = Boolean.FALSE;
     /**
      * The invitation interval.
      */
-    private static final String CONF_INVITATION_INTERVAL = "invitation.interval";
-    /**
-     * The invitation interval default.
-     */
-    private static final String CONF_INVITATION_INTERVAL_DEFAULT = "2";
+    private int invitationInterval = 2;
     /**
      * The reset password interval.
      */
-    private static final String CONF_RESET_PASSWORD_INTERVAL = "resetpassword.interval";
-    /**
-     * The reset password interval default.
-     */
-    private static final String CONF_RESET_PASSWORD_INTERVAL_DEFAULT = "2";
+    private int resetPasswordInterval = 2;
     /**
      * The email template for change request.
      */
-    private static final String CONF_TEMPLATE_CHANGE_EMAIL = "template.change.request";
-    /**
-     * The email template for change request default.
-     */
-    private static final String CONF_TEMPLATE_CHANGE_EMAIL_DEFAULT = "change.email.request";
+    private String templateChangeEmail = "change.email.request";
     /**
      * The email template for registration request.
      */
-    private static final String CONF_TEMPLATE_REGISTRATION_EMAIL = "template.registration.request";
-    /**
-     * The email template for registration request default.
-     */
-    private static final String CONF_TEMPLATE_REGISTRATION_EMAIL_DEFAULT = "registration.email.request";
+    private String templateRegistrationEmail = "registration.email.request";
     /**
      * The email template for reset password request.
      */
-    private static final String CONF_TEMPLATE_RESET_PASSWORD_EMAIL = "template.resetpassword.request";
-    /**
-     * The email template for reset password request default.
-     */
-    private static final String CONF_TEMPLATE_RESET_PASSWORD_EMAIL_DEFAULT = "resetpassword.email.request";
+    private String templateResetPasswordEmail = "resetpassword.email.request";
     /**
      * The email template for invitation request.
      */
-    private static final String CONF_TEMPLATE_INVITATION_EMAIL = "template.invitation.request";
-    /**
-     * The email template for invitation request default.
-     */
-    private static final String CONF_TEMPLATE_INVITATION_EMAIL_DEFAULT = "invitation.email.request";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDefaultValues() {
-        addValue(CONF_REG_INTERVAL, CONF_REG_INTERVAL_DEFAULT);
-        addValue(CONF_REG_SEND_EMAIL, CONF_REG_SEND_EMAIL_DEFAULT);
-        addValue(CONF_INVITATION_INTERVAL, CONF_INVITATION_INTERVAL_DEFAULT);
-        addValue(CONF_RESET_PASSWORD_INTERVAL, CONF_RESET_PASSWORD_INTERVAL_DEFAULT);
-        addValue(CONF_TEMPLATE_CHANGE_EMAIL, CONF_TEMPLATE_CHANGE_EMAIL_DEFAULT);
-        addValue(CONF_TEMPLATE_REGISTRATION_EMAIL, CONF_TEMPLATE_REGISTRATION_EMAIL_DEFAULT);
-        addValue(CONF_TEMPLATE_RESET_PASSWORD_EMAIL, CONF_TEMPLATE_RESET_PASSWORD_EMAIL_DEFAULT);
-        addValue(CONF_TEMPLATE_INVITATION_EMAIL, CONF_TEMPLATE_INVITATION_EMAIL_DEFAULT);
-    }
+    private String templateInvitationEmail = "invitation.email.request";
 
     /**
      * Gets the template for change email.
@@ -112,35 +67,71 @@ public class ProcessRegistrationConfiguration extends AbstractProcessConfigurati
      * @return the template for change email.
      */
     public String getTemplateChangeEmail() {
-        return getStringValue(CONF_TEMPLATE_CHANGE_EMAIL);
+        return templateChangeEmail;
     }
 
+    /**
+     * Sets the template for change email.
+     *
+     * @param templateChangeEmail the template for change email.
+     */    
+    public void setTemplateChangeEmail(String templateChangeEmail) {
+        this.templateChangeEmail = templateChangeEmail;
+    }
+    
     /**
      * Gets the template for registration email.
      *
      * @return the template for registration email.
      */
     public String getTemplateRegistrationEmail() {
-        return getStringValue(CONF_TEMPLATE_REGISTRATION_EMAIL);
+        return templateRegistrationEmail;
     }
 
+    /**
+     * Sets the template for registration email.
+     *
+     * @param templateRegistrationEmail the template for registration email.
+     */    
+    public void setTemplateRegistrationEmail(String templateRegistrationEmail) {
+        this.templateRegistrationEmail = templateRegistrationEmail;
+    }
+    
     /**
      * Gets the template for reset password email.
      *
      * @return the template for reset password email.
      */
     public String getTemplateResetPasswordEmail() {
-        return getStringValue(CONF_TEMPLATE_RESET_PASSWORD_EMAIL);
+        return templateResetPasswordEmail;
     }
 
+    /**
+     * Sets the template for reset password email.
+     *
+     * @param templateResetPasswordEmail the template for reset password email.
+     */    
+    public void setTemplateResetPasswordEmail(String templateResetPasswordEmail) {
+        this.templateResetPasswordEmail = templateResetPasswordEmail;
+    }
+    
     /**
      * Gets the template for invitation email.
      *
      * @return the template for invitation email.
      */
     public String getTemplateInvitationEmail() {
-        return getStringValue(CONF_TEMPLATE_INVITATION_EMAIL);
+        return templateInvitationEmail;
     }
+    
+    /**
+     * Sets the template for invitation email.
+     *
+     * @param templateInvitationEmail the template for invitation email.
+     */    
+    public void setTemplateInvitationEmail(String templateInvitationEmail) {
+        this.templateInvitationEmail = templateInvitationEmail;
+    }        
 
     /**
      * Gets the reset password interval.
@@ -148,33 +139,71 @@ public class ProcessRegistrationConfiguration extends AbstractProcessConfigurati
      * @return the reset password interval.
      */
     public int getResetPasswordInterval() {
-        return getIntegerValue(CONF_RESET_PASSWORD_INTERVAL);
+        return resetPasswordInterval;
     }
 
+    /**
+     * Sets the reset password interval.
+     *
+     * @param resetPasswordInterval the reset password interval.
+     */
+    public void setResetPasswordInterval(int resetPasswordInterval) {
+        this.resetPasswordInterval = resetPasswordInterval;
+    }
+    
     /**
      * Gets the invitation interval.
      *
      * @return the invitation interval.
      */
     public int getInvitationInterval() {
-        return getIntegerValue(CONF_INVITATION_INTERVAL);
+        return invitationInterval;
     }
 
+    /**
+     * Sets the invitation interval.
+     *
+     * @param invitationInterval the invitation interval.
+     */    
+    public void setInvitationInterval(int invitationInterval) {
+        this.invitationInterval = invitationInterval;
+    }
+    
     /**
      * Gets the send registration email flag.
      *
      * @return the send registration email flag.
      */
     public boolean isSendRegistrationEmail() {
-        return getBooleanValue(CONF_REG_SEND_EMAIL);
+        return sendRegistrationEmail;
     }
 
+    /**
+     * Sets the send registration email flag.
+     *
+     * @param sendRegistrationEmail the send registration email flag.
+     */    
+    public void setSendRegistrationEmail(boolean sendRegistrationEmail) {
+        this.sendRegistrationEmail = sendRegistrationEmail;
+    }
+    
     /**
      * Gets the registration interval.
      *
      * @return the registration interval.
      */
     public int getRegistrationInterval() {
-        return getIntegerValue(CONF_REG_INTERVAL);
+        return registrationInterval;
     }
+    
+    /**
+     * Sets the registration interval.
+     *
+     * @param registrationInterval the registration interval.
+     */
+    public void setRegistrationInterval(int registrationInterval) {
+        this.registrationInterval = registrationInterval;
+    }
+    
+    
 }

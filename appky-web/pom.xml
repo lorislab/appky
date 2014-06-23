@@ -36,6 +36,13 @@
 			<version>${project.version}</version>
 		</dependency>
 				
+		<!-- BARN -->
+		<dependency>
+			<groupId>org.lorislab.barn</groupId>
+			<artifactId>barn-api</artifactId>
+			<scope>provided</scope>			
+		</dependency>
+						
 		<!-- JEL -->
 		<dependency>
 			<groupId>org.lorislab.jel</groupId>

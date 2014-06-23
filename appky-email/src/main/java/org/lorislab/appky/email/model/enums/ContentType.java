@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,11 +40,11 @@ public enum ContentType {
     /**
      * The content type.
      */
-    private String type;
+    private final String type;
     /**
      * The file extension.
      */
-    private String extension;
+    private final String extension;
 
     /**
      * The default constructor.

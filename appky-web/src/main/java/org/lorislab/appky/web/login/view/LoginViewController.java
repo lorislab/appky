@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,6 @@
 package org.lorislab.appky.web.login.view;
 
 
-import org.lorislab.appky.web.Constants;
-import org.lorislab.appky.web.Navigation;
-import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
-import org.lorislab.appky.web.config.ViewConfiguration;
-import org.lorislab.appky.web.login.action.ForgotPasswordAction;
-import org.lorislab.appky.web.login.action.LoginAction;
-import org.lorislab.appky.web.login.action.LogoutAction;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -34,9 +27,16 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.lorislab.appky.application.model.UserProfile;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
-import org.lorislab.appky.process.ejb.UserProcessServiceLocal;
-import org.lorislab.appky.process.registration.ejb.RegistrationServiceLocal;
+import org.lorislab.appky.process.ejb.UserProcessService;
+import org.lorislab.appky.process.registration.ejb.RegistrationService;
+import org.lorislab.appky.web.Constants;
+import org.lorislab.appky.web.Navigation;
+import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
+import org.lorislab.appky.web.config.ViewConfiguration;
+import org.lorislab.appky.web.login.action.ForgotPasswordAction;
+import org.lorislab.appky.web.login.action.LoginAction;
+import org.lorislab.appky.web.login.action.LogoutAction;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.util.FacesResourceUtil;
 
@@ -86,17 +86,17 @@ public class LoginViewController implements Serializable {
      * The registration service.
      */
     @EJB
-    private RegistrationServiceLocal registrationService;
+    private RegistrationService registrationService;
     /**
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configurationService;
+    private ConfigurationService configurationService;
     /**
      * The user process service.
      */
     @EJB
-    private UserProcessServiceLocal userProcessService;
+    private UserProcessService userProcessService;
 
     /**
      * The default constructor.
@@ -113,7 +113,7 @@ public class LoginViewController implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            config = configurationService.loadConfiguration(ViewConfiguration.class);
+            config = configurationService.getConfiguration(ViewConfiguration.class);
         } catch (Exception ex) {
             FacesResourceUtil.handleExceptionMessage(ex);
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.lorislab.appky.application.criteria.VersionSearchCriteria;
-import org.lorislab.appky.application.ejb.VersionServiceLocal;
+import org.lorislab.appky.application.ejb.VersionService;
 import org.lorislab.appky.application.model.Version;
 import org.lorislab.appky.web.admin.app.action.VersionListSearchAction;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
@@ -44,7 +44,7 @@ public class VersionsListViewController extends AbstractTableSearchViewControlle
      * The version service.
      */
     @EJB
-    private VersionServiceLocal service;
+    private VersionService service;
     /**
      * The version view controller.
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
  */
 package org.lorislab.appky.process.config;
 
-import org.lorislab.appky.config.model.AbstractConfigurationModel;
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,57 +25,27 @@ import java.util.Locale;
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ServerConfiguration extends AbstractConfigurationModel {
+public class ServerConfiguration implements Serializable {
 
     /**
      * The UID for this class.
      */
-    private static final long serialVersionUID = 4216792931625355919L;
-    /**
-     * The module name.
-     */
-    private static final String MODULE = "server";
+    private static final long serialVersionUID = 5240550628044434862L;
+
     /**
      * The list of server languages key.
      */
-    private static final String CONF_SERVER_LANGS = "server.langs";
-    /**
-     * The list of server languages.
-     */
-    private static final String CONF_SERVER_LANGS_DEFAULT = "en,de";
+    private List<Locale> serverLangs = Arrays.asList(Locale.ENGLISH, Locale.GERMAN);
+
     /**
      * The server default language key.
      */
-    private static final String CONF_SERVER_LANG = "server.lang";
-    /**
-     * The default server language.
-     */
-    private static final String CONF_SERVER_LANG_DEFAULT = "en";
+    private Locale serverLang = Locale.ENGLISH;
+    
     /**
      * The server URL.
      */
-    private static final String CONF_SERVER_URL = "server.url";
-    /**
-     * The server URL default value.
-     */    
-    private static final String CONF_SERVER_URL_DEFAULT = "http://localhost:8080/store";    
-
-    /**
-     * The default constructor.
-     */
-    public ServerConfiguration() {
-        super(MODULE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDefaultValues() {
-        addValue(CONF_SERVER_URL, CONF_SERVER_URL_DEFAULT);
-        addValue(CONF_SERVER_LANGS, CONF_SERVER_LANGS_DEFAULT);
-        addValue(CONF_SERVER_LANG, CONF_SERVER_LANG_DEFAULT);
-    }
+    private String serverUrl = "http://localhost:8080/appky";   
 
     /**
      * Gets the server languages list.
@@ -82,24 +53,52 @@ public class ServerConfiguration extends AbstractConfigurationModel {
      * @return the server languages list.
      */
     public List<Locale> getServerLangs() {
-        return getLocaleList(CONF_SERVER_LANGS);
+        return serverLangs;
     }
 
+    /**
+     * Sets the server languages list.
+     *
+     * @param serverLangs the server languages list.
+     */
+    public void setServerLangs(List<Locale> serverLangs) {
+        this.serverLangs = serverLangs;
+    }
+    
     /**
      * Gets the server language.
      *
      * @return the server language.
      */
     public Locale getServerLang() {
-        return getLocaleValue(CONF_SERVER_LANG);
+        return serverLang;
     }
-    
+
+    /**
+     * Sets the server language.
+     * 
+     * @param serverLang the server language.
+     */
+    public void setServerLang(Locale serverLang) {
+        this.serverLang = serverLang;
+    }
+        
     /**
      * Gets the server URL.
      *
      * @return the server URL.
      */
     public String getServerURL() {
-        return getStringValue(CONF_SERVER_URL);
-    }    
+        return serverUrl;
+    }
+
+    /**
+     * Sets the server URL.
+     *
+     * @param serverUrl the server URL.
+     */    
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+    
 }

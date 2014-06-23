@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import org.lorislab.appky.application.model.Role;
 import org.lorislab.jel.jpa.model.TraceablePersistent;
 
 /**
@@ -39,7 +38,7 @@ import org.lorislab.jel.jpa.model.TraceablePersistent;
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @Entity
-@Table(name = "ST_APPLICATION")
+@Table(name = "AY_APPLICATION")
 public class Application extends TraceablePersistent {
 
     /**
@@ -78,7 +77,7 @@ public class Application extends TraceablePersistent {
      */
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_APP_ROLE",
+    @JoinTable(name = "AY_APP_ROLE",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"C_APP_ID", "C_ROLE_ID"})},
     joinColumns = {
@@ -91,7 +90,7 @@ public class Application extends TraceablePersistent {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_APP_TITLE",
+    @JoinTable(name = "AY_APP_TITLE",
     joinColumns = {
         @JoinColumn(name = "C_APP")},
     inverseJoinColumns = {
@@ -102,7 +101,7 @@ public class Application extends TraceablePersistent {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_APP_DESC",
+    @JoinTable(name = "AY_APP_DESC",
     joinColumns = {
         @JoinColumn(name = "C_APP")},
     inverseJoinColumns = {

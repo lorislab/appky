@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.lorislab.appky.application.criteria.UserProfileSearchCriteria;
-import org.lorislab.appky.application.ejb.UserProfileServiceLocal;
+import org.lorislab.appky.application.ejb.UserProfileService;
 import org.lorislab.appky.application.model.UserProfile;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractTableSearchViewController;
@@ -44,7 +44,7 @@ public class UserTableViewController extends AbstractTableSearchViewController<U
      * The user profile service.
      */
     @EJB
-    private UserProfileServiceLocal service;
+    private UserProfileService service;
     /**
      * The user search action.
      */

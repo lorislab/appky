@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.lorislab.appky.email.util.EmailUtil;
-import org.lorislab.appky.process.registration.ejb.RegistrationServiceLocal;
+import org.lorislab.appky.process.registration.ejb.RegistrationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 
 /**
@@ -56,7 +56,7 @@ public class InvitationViewController implements Serializable {
      * The registration service.
      */
     @EJB
-    private RegistrationServiceLocal service;
+    private RegistrationService service;
     /**
      * The user profile view controller.
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,25 +42,18 @@ public final class EmailFactory {
      * Creates the email.
      *
      * @param locale the email locale.
-     * @param from the email from address.
      * @param to the email to address.
      * @param template the email template.
-     * @param contentCharset the content char-ser
-     * @param transferEncoding the transfer encoding.
-     * @param contentType the content type.
      * @param values the list of template values.
      * @return the created email.
      */
-    public static Email createEmail(Locale locale, String from, String to, String template, String contentCharset, String transferEncoding, String contentType, Object... values) {
+    public static Email createEmail(Locale locale, String to, String template, Object... values) {
         Email result = new Email();
         result.getTo().add(to);
         // set email locale
         result.setLocale(locale);
         // sets the attributes
         result.setTemplate(template);
-        result.setContentType(contentType);
-        result.setContentCharset(contentCharset);
-        result.setTransferEncoding(transferEncoding);
         // add parameters
         Map<String, Object> par = result.getParameters();
         if (values != null) {

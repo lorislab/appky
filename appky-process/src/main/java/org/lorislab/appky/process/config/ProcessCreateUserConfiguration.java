@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,14 @@
  */
 package org.lorislab.appky.process.config;
 
+import java.io.Serializable;
+
 /**
  * The create user configuration model.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ProcessCreateUserConfiguration extends AbstractProcessConfiguration {
+public class ProcessCreateUserConfiguration implements Serializable {
 
     /**
      * The UID for this class.
@@ -29,28 +31,12 @@ public class ProcessCreateUserConfiguration extends AbstractProcessConfiguration
     /**
      * The default role.
      */
-    private static final String CONFIG_DEFAULT_ROLE = "role.default";
-    /**
-     * The default role default.
-     */
-    private static final String CONFIG_DEFAULT_ROLE_DEFAULT = "u-store";
+    private String defaultRole = "u-store";
+
     /**
      * The email validation role.
      */
-    private static final String CONFIG_EMAILVALIDATION_ROLE = "role.emailValidation";
-    /**
-     * The email validation role default.
-     */
-    private static final String CONFIG_EMAILVALIDATION_ROLE_DEFAULT = "u-reg-store";
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDefaultValues() {
-        addValue(CONFIG_DEFAULT_ROLE, CONFIG_DEFAULT_ROLE_DEFAULT);
-        addValue(CONFIG_EMAILVALIDATION_ROLE, CONFIG_EMAILVALIDATION_ROLE_DEFAULT);
-    }
+    private String emailValidationRole = "u-reg-store";
 
     /**
      * Gets the default role.
@@ -58,7 +44,16 @@ public class ProcessCreateUserConfiguration extends AbstractProcessConfiguration
      * @return the default role.
      */
     public String getDefaultRole() {
-        return getStringValue(CONFIG_DEFAULT_ROLE);
+        return defaultRole;
+    }
+
+    /**
+     * Sets the default role.
+     *
+     * @param defaultRole the default role.
+     */
+    public void setDefaultRole(String defaultRole) {
+        this.defaultRole = defaultRole;
     }
 
     /**
@@ -67,7 +62,16 @@ public class ProcessCreateUserConfiguration extends AbstractProcessConfiguration
      * @return the email validation role.
      */
     public String getEmailValidationRole() {
-        return getStringValue(CONFIG_EMAILVALIDATION_ROLE);
+        return emailValidationRole;
+    }
+
+    /**
+     * Sets the email validation role.
+     *
+     * @param emailValidationRole the email validation role.
+     */
+    public void setEmailValidationRole(String emailValidationRole) {
+        this.emailValidationRole = emailValidationRole;
     }
 
 }

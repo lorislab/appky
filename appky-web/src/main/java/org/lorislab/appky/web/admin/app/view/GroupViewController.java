@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,26 @@
  */
 package org.lorislab.appky.web.admin.app.view;
 
-import org.lorislab.appky.web.admin.app.action.GroupDeleteAction;
-import org.lorislab.appky.web.admin.app.action.GroupSaveAction;
-import org.lorislab.appky.web.admin.app.model.DocumentImageType;
-import org.lorislab.appky.web.admin.role.view.RoleConverterViewController;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.ApplicationServiceLocal;
-import org.lorislab.appky.application.ejb.GroupServiceLocal;
+import org.lorislab.appky.application.ejb.ApplicationService;
+import org.lorislab.appky.application.ejb.GroupService;
 import org.lorislab.appky.application.factory.ApplicationObjectFactory;
 import org.lorislab.appky.application.model.Application;
 import org.lorislab.appky.application.model.Document;
 import org.lorislab.appky.application.model.Group;
 import org.lorislab.appky.application.model.Role;
-import org.lorislab.appky.application.trash.ejb.TrashServiceLocal;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
+import org.lorislab.appky.application.trash.ejb.TrashService;
 import org.lorislab.appky.process.config.ServerConfiguration;
+import org.lorislab.appky.web.admin.app.action.GroupDeleteAction;
+import org.lorislab.appky.web.admin.app.action.GroupSaveAction;
+import org.lorislab.appky.web.admin.app.model.DocumentImageType;
+import org.lorislab.appky.web.admin.role.view.RoleConverterViewController;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractEntityViewController;
 import org.primefaces.model.DualListModel;
@@ -56,22 +56,22 @@ public class GroupViewController extends AbstractEntityViewController<Group> {
      * The group service.
      */
     @EJB
-    private GroupServiceLocal service;
+    private GroupService service;
     /**
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
+    private ConfigurationService configService;
     /**
      * The application service.
      */
     @EJB
-    private ApplicationServiceLocal appService;
+    private ApplicationService appService;
     /**
      * The trash service.
      */
     @EJB
-    private TrashServiceLocal trashService;
+    private TrashService trashService;
     /**
      * The tree view controller.
      */
@@ -175,7 +175,7 @@ public class GroupViewController extends AbstractEntityViewController<Group> {
      */
     @FacesServiceMethod
     public void addApplication(String name) throws Exception {
-        ServerConfiguration config = configService.loadConfiguration(ServerConfiguration.class);
+        ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
         Application application = ApplicationObjectFactory.createApplication(name, config.getServerLang());
         application.setGroup(model);
         appService.saveApplication(application);
@@ -191,7 +191,7 @@ public class GroupViewController extends AbstractEntityViewController<Group> {
     @FacesServiceMethod
     public void create(String name) throws Exception {
         if (name != null && !name.isEmpty()) {
-            ServerConfiguration config = configService.loadConfiguration(new ServerConfiguration());
+            ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
             Group newGroup = ApplicationObjectFactory.createGroup(name, config.getServerLang());
             service.saveGroup(newGroup);
             treeViewController.addModel(newGroup, null);
@@ -211,7 +211,7 @@ public class GroupViewController extends AbstractEntityViewController<Group> {
             if (model != null) {
                 groupRoles = roleConverterVC.createRoleDualListModel(model.getRoles(), false);
 
-                ServerConfiguration config = configService.loadConfiguration(new ServerConfiguration());
+                ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
                 List<Locale> serverLangs = config.getServerLangs();
                 Locale defaultLocale = config.getServerLang();
                 descriptionVC.open(model.getDescriptions(), serverLangs, defaultLocale);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import org.lorislab.jel.jpa.model.TraceablePersistent;
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
 @Entity
-@Table(name = "ST_PLATFORM")
+@Table(name = "AY_PLATFORM")
 public class Platform extends TraceablePersistent {
 
     /**
@@ -74,7 +74,7 @@ public class Platform extends TraceablePersistent {
      * The images.
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinTable(name = "ST_PLATFORM_IMAGES",
+    @JoinTable(name = "AY_PLATFORM_IMAGES",
     joinColumns = {
         @JoinColumn(name = "C_PLATFORM")},
     inverseJoinColumns = {
@@ -86,7 +86,7 @@ public class Platform extends TraceablePersistent {
      */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderColumn(name = "C_INDEX")
-    @JoinTable(name = "ST_PLATFORM_DESC",
+    @JoinTable(name = "AY_PLATFORM_DESC",
     joinColumns = {
         @JoinColumn(name = "C_PLATFORM")},
     inverseJoinColumns = {

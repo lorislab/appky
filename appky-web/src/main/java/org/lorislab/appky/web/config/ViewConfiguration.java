@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
  */
 package org.lorislab.appky.web.config;
 
-import org.lorislab.appky.config.model.AbstractConfigurationModel;
-
+import java.io.Serializable;
 
 
 /**
@@ -24,48 +23,22 @@ import org.lorislab.appky.config.model.AbstractConfigurationModel;
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ViewConfiguration extends AbstractConfigurationModel {
+public class ViewConfiguration implements Serializable {
 
     /**
      * The UID for this class.
      */
     private static final long serialVersionUID = 72168413623648302L;
-    /**
-     * The module name.
-     */
-    private static final String MODULE = "view";
+
     /**
      * The registration public key.
      */
-    private static final String CONF_REG_PUBLIC = "view.registration";
-    /**
-     * The registration public default value.
-     */
-    private static final String CONF_REG_PUBLIC_DEFAULT = "false";
+    private boolean publicRegistration = Boolean.FALSE;
+
     /**
      * The forgot public key.
      */
-    private static final String CONF_FORGOT_PUBLIC = "view.forgotPassword";
-    /**
-     * The forgot public default value.
-     */
-    private static final String CONF_FORGOT_PUBLIC_DEFAULT = "false";
-
-    /**
-     * The default constructor.
-     */
-    public ViewConfiguration() {
-        super(MODULE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDefaultValues() {
-        addValue(CONF_REG_PUBLIC, CONF_REG_PUBLIC_DEFAULT);
-        addValue(CONF_FORGOT_PUBLIC, CONF_FORGOT_PUBLIC_DEFAULT);
-    }
+    private boolean forgotPublic = Boolean.FALSE;
 
     /**
      * Gets the public forgot flag.
@@ -73,15 +46,34 @@ public class ViewConfiguration extends AbstractConfigurationModel {
      * @return the public forgot flag.
      */
     public boolean isPublicForgot() {
-        return getBooleanValue(CONF_FORGOT_PUBLIC);
+        return forgotPublic;
     }
 
+    /**
+     * Sets the public forgot flag.
+     *
+     * @param forgotPublic the public forgot flag.
+     */    
+    public void setForgotPublic(boolean forgotPublic) {
+        this.forgotPublic = forgotPublic;
+    }
+    
     /**
      * Gets the public registration flag.
      *
      * @return the public registration flag.
      */
     public boolean isPublicRegistration() {
-        return getBooleanValue(CONF_REG_PUBLIC);
+        return publicRegistration;
     }
+
+    /**
+     * Sets the public registration flag.
+     *
+     * @param publicRegistration the public registration flag.
+     */    
+    public void setPublicRegistration(boolean publicRegistration) {
+        this.publicRegistration = publicRegistration;
+    }
+        
 }

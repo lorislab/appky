@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.lorislab.appky.web.mobile.view;
 
-import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
-import org.lorislab.appky.web.mobile.action.RemoveApplicationAction;
 import java.io.Serializable;
 import java.util.Locale;
 import javax.ejb.EJB;
@@ -25,13 +23,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.lorislab.appky.application.model.UserApplication;
 import org.lorislab.appky.application.model.UserProfile;
-import org.lorislab.appky.application.wrapper.ejb.ApplicationWrapperServiceLocal;
+import org.lorislab.appky.application.wrapper.ejb.ApplicationWrapperService;
 import org.lorislab.appky.application.wrapper.model.ApplicationWrapper;
 import org.lorislab.appky.application.wrapper.model.PlatformWrapper;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
 import org.lorislab.appky.process.config.ServerConfiguration;
-import org.lorislab.appky.process.ejb.UserApplicationProcessServiceLocal;
+import org.lorislab.appky.process.ejb.UserApplicationProcessService;
 import org.lorislab.appky.process.model.ApplicationPackage;
+import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
+import org.lorislab.appky.web.mobile.action.RemoveApplicationAction;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.ejb.exception.ServiceException;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 
@@ -64,12 +64,12 @@ public class MobilePlatformViewController implements Serializable {
      * The user application process service.
      */
     @EJB
-    private UserApplicationProcessServiceLocal processService;
+    private UserApplicationProcessService processService;
     /**
      * The application wrapper service.
      */
     @EJB
-    private ApplicationWrapperServiceLocal service;
+    private ApplicationWrapperService service;
     /**
      * The user profile view controller.
      */
@@ -79,7 +79,7 @@ public class MobilePlatformViewController implements Serializable {
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
+    private ConfigurationService configService;
     /**
      * The default constructor.
      */
@@ -167,7 +167,7 @@ public class MobilePlatformViewController implements Serializable {
             Locale userLocale = userProfile.getLocale();
 
             // set default user locale
-            ServerConfiguration config = configService.loadConfiguration(ServerConfiguration.class);
+            ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
             Locale defaultLocale = config.getServerLang();
 
             wrapper = service.loadPlatformWrapperByPlatformGuid(guid, userProfile.getGuid(), userLocale, defaultLocale);

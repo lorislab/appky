@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 package org.lorislab.appky.web.admin.profile.view;
 
 
-import org.lorislab.appky.web.admin.profile.action.SaveProfileAction;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.UserProfileServiceLocal;
+import org.lorislab.appky.application.ejb.UserProfileService;
 import org.lorislab.appky.application.model.UserProfile;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
 import org.lorislab.appky.process.config.ServerConfiguration;
-import org.lorislab.jel.ejb.exception.ServiceException;
+import org.lorislab.appky.web.admin.profile.action.SaveProfileAction;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractEntityViewController;
 
@@ -56,12 +54,12 @@ public class UserProfileViewController extends AbstractEntityViewController<User
      * The user profile service.
      */
     @EJB
-    private UserProfileServiceLocal userProfileService;
+    private UserProfileService userProfileService;
     /**
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
+    private ConfigurationService configService;
     /**
      * The save profile action.
      */
@@ -84,12 +82,8 @@ public class UserProfileViewController extends AbstractEntityViewController<User
      */
     @PostConstruct
     public void postConstruct() {
-        try {
-            ServerConfiguration config = configService.loadConfiguration(ServerConfiguration.class);
-            locales = config.getServerLangs();
-        } catch (ServiceException ex) {
-            LOGGER.log(Level.WARNING, "Error reading the server configuration list of locles.", ex);
-        }          
+        ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
+        locales = config.getServerLangs();          
     }
     
     /**

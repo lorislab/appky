@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package org.lorislab.appky.web.mobile.view;
 
-import org.lorislab.appky.web.UserAgentController;
-import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +25,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.lorislab.appky.application.criteria.ApplicationSearchCriteria;
 import org.lorislab.appky.application.model.enums.PlatformType;
-import org.lorislab.appky.application.wrapper.ejb.ApplicationWrapperServiceLocal;
+import org.lorislab.appky.application.wrapper.ejb.ApplicationWrapperService;
 import org.lorislab.appky.application.wrapper.model.ApplicationWrapper;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
 import org.lorislab.appky.process.config.ServerConfiguration;
+import org.lorislab.appky.web.UserAgentController;
+import org.lorislab.appky.web.admin.profile.view.UserProfileViewController;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.util.FacesUtil;
 
@@ -55,7 +55,7 @@ public class MobileApplicationViewController implements Serializable {
      * The application wrapper service.
      */
     @EJB
-    private ApplicationWrapperServiceLocal service;
+    private ApplicationWrapperService service;
     /**
      * The user agent controller.
      */
@@ -65,7 +65,7 @@ public class MobileApplicationViewController implements Serializable {
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
+    private ConfigurationService configService;
     /**
      * The user profile view controller.
      */
@@ -104,7 +104,7 @@ public class MobileApplicationViewController implements Serializable {
         criteria.setUserLocale(userLocale);
 
         // set default user locale
-        ServerConfiguration config = configService.loadConfiguration(ServerConfiguration.class);
+        ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
         Locale defaultLocale = config.getServerLang();
         criteria.setDefaultUserLocale(defaultLocale);
         // set user id

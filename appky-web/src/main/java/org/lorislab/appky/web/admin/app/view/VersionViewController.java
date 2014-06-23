@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Andrej Petras <andrej@ajka-andrej.com>.
+ * Copyright 2014 lorislab.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,20 +22,20 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.lorislab.appky.application.ejb.VersionServiceLocal;
+import org.lorislab.appky.application.ejb.VersionService;
 import org.lorislab.appky.application.factory.ApplicationObjectFactory;
 import org.lorislab.appky.application.model.Document;
 import org.lorislab.appky.application.model.Platform;
 import org.lorislab.appky.application.model.Version;
-import org.lorislab.appky.application.trash.ejb.TrashServiceLocal;
-import org.lorislab.appky.config.ejb.ConfigurationServiceLocal;
+import org.lorislab.appky.application.trash.ejb.TrashService;
 import org.lorislab.appky.process.config.ServerConfiguration;
-import org.lorislab.appky.process.ejb.UserApplicationProcessServiceLocal;
+import org.lorislab.appky.process.ejb.UserApplicationProcessService;
 import org.lorislab.appky.web.admin.app.action.VersionCreateAction;
 import org.lorislab.appky.web.admin.app.action.VersionDeleteAction;
 import org.lorislab.appky.web.admin.app.action.VersionReleaseAction;
 import org.lorislab.appky.web.admin.app.action.VersionSaveAction;
 import org.lorislab.appky.web.admin.app.action.VersionUnreleaseAction;
+import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.jsf.interceptor.annotations.FacesServiceMethod;
 import org.lorislab.jel.jsf.view.AbstractEntityViewController;
 import org.primefaces.event.SelectEvent;
@@ -81,22 +81,22 @@ public class VersionViewController extends AbstractEntityViewController<Version>
      * The version service.
      */
     @EJB
-    protected VersionServiceLocal service;
+    protected VersionService service;
     /**
      * The user application process service.
      */
     @EJB
-    private UserApplicationProcessServiceLocal processService;
+    private UserApplicationProcessService processService;
     /**
      * The configuration service.
      */
     @EJB
-    private ConfigurationServiceLocal configService;
+    private ConfigurationService configService;
     /**
      * The trash service.
      */
     @EJB
-    private TrashServiceLocal trashService;
+    private TrashService trashService;
     /**
      * The versions list view controller.
      */
@@ -215,7 +215,7 @@ public class VersionViewController extends AbstractEntityViewController<Version>
      */
     @FacesServiceMethod
     public void create() throws Exception {
-        ServerConfiguration config = configService.loadConfiguration(new ServerConfiguration());
+        ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
         model = ApplicationObjectFactory.createVersion(platform, config.getServerLang());
         if (model != null) {
             List<Locale> serverLangs = config.getServerLangs();
@@ -235,7 +235,7 @@ public class VersionViewController extends AbstractEntityViewController<Version>
         if (guid != null) {
             model = service.loadFullVersion(guid);
             if (model != null) {
-                ServerConfiguration config = configService.loadConfiguration(new ServerConfiguration());
+                ServerConfiguration config = configService.getConfiguration(ServerConfiguration.class);
                 List<Locale> serverLangs = config.getServerLangs();
                 Locale defaultLocale = config.getServerLang();
                 descriptionVC.open(model.getDescriptions(), serverLangs, defaultLocale);
