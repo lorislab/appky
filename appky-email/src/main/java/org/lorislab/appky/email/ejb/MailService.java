@@ -67,7 +67,7 @@ public class MailService extends AbstractServiceBean {
     /**
      * The mail session.
      */
-    @Resource(lookup = "java:/org.lorislab.appky.mail")
+    @Resource(lookup = "java:jboss/mail/org.lorislab.appky.mail")
     private Session mailSession;
 
     /**
