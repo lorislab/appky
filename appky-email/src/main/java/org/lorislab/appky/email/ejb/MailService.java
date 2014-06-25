@@ -38,7 +38,6 @@ import org.lorislab.appky.email.util.EmailUtil;
 import org.lorislab.barn.api.service.ConfigurationService;
 import org.lorislab.jel.base.util.FileUtil;
 import org.lorislab.jel.ejb.exception.ServiceException;
-import org.lorislab.jel.ejb.services.AbstractServiceBean;
 
 /**
  * The mail service.
@@ -47,7 +46,7 @@ import org.lorislab.jel.ejb.services.AbstractServiceBean;
  */
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class MailService extends AbstractServiceBean {
+public class MailService {
 
     /**
      * The UID for this class.

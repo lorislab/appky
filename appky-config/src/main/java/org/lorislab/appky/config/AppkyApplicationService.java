@@ -13,33 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.web.log;
 
-import org.lorislab.jel.log.parameters.LogParameter;
-import org.lorislab.jel.log.util.ReflectionUtil;
+package org.lorislab.appky.config;
 
+import org.kohsuke.MetaInfServices;
+import org.lorislab.barn.api.service.ApplicationService;
 
 /**
- * The default reflection logger parameter.
+ * The application service for the BARN.
  * 
- * @author Andrej Petras <andrej@ajka-andrej.com>
+ * @author Andrej Petras
  */
-public class DefaultReflectionLogParameter implements  LogParameter {
+@MetaInfServices
+public class AppkyApplicationService implements ApplicationService {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean isResult() {
-        return true;
+    public String getApplication() {
+        return "APPKY";
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object getObject(Object parameter) {
-        return ReflectionUtil.toString(parameter);
+    public String getVersion() {
+        return "1.0.0";
     }
     
 }

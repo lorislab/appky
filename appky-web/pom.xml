@@ -101,15 +101,9 @@
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 		</dependency>
-					
-		<!-- File Upload -->
 		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>bootstrap</artifactId>
 		</dependency>
 		
 		<!-- META-INF SERVICES -->

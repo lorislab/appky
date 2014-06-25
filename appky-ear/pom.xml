@@ -108,24 +108,12 @@
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<configuration>
-									<tasks>
-										<copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}" tofile="${server.home.dir}/standalone/deployments/${project.build.finalName}.${project.packaging}" />
-									</tasks>
-								</configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+						<groupId>org.lorislab.maven</groupId>
+						<artifactId>jboss-server-plugin</artifactId>
+					</plugin>					
 				</plugins>
-			</build> 			
-		</profile>
+			</build>
+		</profile>		
 	</profiles>	
 	
 </project>

@@ -16,10 +16,8 @@
 package org.lorislab.appky.tracking.ejb;
 
 ;
-import java.util.logging.Logger;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,7 +26,6 @@ import org.lorislab.appky.history.activity.factory.ActivityFactory;
 import org.lorislab.appky.history.activity.model.Activity;
 import org.lorislab.appky.tracking.model.AbstractTrackingData;
 import org.lorislab.jel.ejb.exception.ServiceException;
-import org.lorislab.jel.ejb.services.AbstractServiceBean;
 
 
 /**

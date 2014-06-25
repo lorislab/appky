@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.web.config;
+package org.lorislab.appky.process.config;
 
 import java.io.Serializable;
 

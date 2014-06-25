@@ -22,7 +22,17 @@
 		<dependency>
 			<groupId>org.lorislab.barn</groupId>
 			<artifactId>barn-standalone-ejb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lorislab.barn</groupId>
+			<artifactId>barn-adapter-resteasy</artifactId>
 		</dependency>		
+		<!-- META-INF SERVICES -->
+		<dependency>
+			<groupId>org.kohsuke.metainf-services</groupId>
+			<artifactId>metainf-services</artifactId>
+			<optional>true</optional>
+		</dependency>					
 	</dependencies>  
     
 	<build>
@@ -40,6 +50,7 @@
 								<includes>
 									<include>org.lorislab.barn:barn-db</include>
 									<include>org.lorislab.barn:barn-standalone-ejb</include>
+									<include>org.lorislab.barn:barn-adapter-resteasy</include>
 								</includes>
 							</artifactSet>
 						</configuration>

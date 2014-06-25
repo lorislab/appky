@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lorislab.appky.web.log;
+package org.lorislab.appky.process.log;
 
 
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import org.lorislab.jel.log.parameters.ClassLogParameter;
 import org.lorislab.jel.log.parameters.InstanceOfLogParameter;
 import org.lorislab.jel.log.parameters.LogParameter;
 import org.lorislab.jel.log.parameters.impl.BasicLogParamater;
+import org.lorislab.jel.log.parameters.impl.DefaultReflectionLogParameter;
 
 /**
  * The store log service configuration.
@@ -40,9 +41,7 @@ public class LogServiceConfigurationImpl implements LogServiceConfiguration {
      */
     @Override
     public List<ClassLogParameter> getClassLogParameters() {
-        List<ClassLogParameter> result = new ArrayList<>();
-        result.add(new BasicLogParamater());
-        return result;
+        return null;
     }
 
     /**
@@ -50,8 +49,7 @@ public class LogServiceConfigurationImpl implements LogServiceConfiguration {
      */
     @Override
     public List<InstanceOfLogParameter> getInstanceOfLogParameters() {
-        List<InstanceOfLogParameter> result = new ArrayList<>();
-        return result;
+        return null;
     }
 
     /**

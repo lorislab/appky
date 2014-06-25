@@ -15,8 +15,7 @@
  */
 package org.lorislab.appky.web.common;
 
-
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
@@ -27,7 +26,6 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
-import org.apache.commons.io.IOUtils;
 import org.lorislab.appky.application.factory.ApplicationObjectFactory;
 import org.lorislab.appky.application.model.Document;
 
@@ -60,11 +58,9 @@ public class CacheController implements Serializable {
         Document result = null;
         result = ApplicationObjectFactory.createDocument();
 
-        InputStream in = null;
         try {
             URL url = context.getResource(path);
-            in = url.openStream();
-            byte[] bytes = IOUtils.toByteArray(in);
+            byte[] bytes = load(url);
             if (bytes != null) {
                 result.setContentSize(bytes.length);
                 result.setName(path);
@@ -72,17 +68,34 @@ public class CacheController implements Serializable {
             }
         } catch (Exception ex) {
             Logger.getLogger(CacheController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        tmp.put(path, result);
+        return result;
+    }
+
+    private static byte[] load(URL url) throws Exception {
+        
+        byte[] result = null;
+        
+        ByteArrayOutputStream bais = new ByteArrayOutputStream();
+        InputStream is = null;
+        try {
+            is = url.openStream();
+            byte[] byteChunk = new byte[4096]; // Or whatever size you want to read in at a time.
+            int n;
+
+            while ((n = is.read(byteChunk)) > 0) {
+                bais.write(byteChunk, 0, n);
+            }
+            
+            result = bais.toByteArray();
+            
         } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(CacheController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (is != null) {
+                is.close();
             }
         }
-
-        tmp.put(path, result);
         return result;
     }
 
