@@ -15,19 +15,13 @@
  */
 package org.lorislab.appky.process.config;
 
-import java.io.Serializable;
-
 /**
  * The create user configuration model.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ProcessCreateUserConfiguration implements Serializable {
+public class ProcessCreateUserConfiguration {
 
-    /**
-     * The UID for this class.
-     */
-    private static final long serialVersionUID = 3750186286911751807L;
     /**
      * The default role.
      */

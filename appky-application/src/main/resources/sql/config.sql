@@ -46,10 +46,11 @@ INSERT INTO CORE_CONFIG_PARAM (C_PARENT_GUID, C_GUID, C_OPLOCK, C_NAME, C_VALUE,
 -- The the user email validation role (registration process)
 INSERT INTO CORE_CONFIG_PARAM (C_PARENT_GUID, C_GUID, C_OPLOCK, C_NAME, C_VALUE, C_DEFAULT, C_TYPE, C_EDIT) VALUES ('process', 'CONFIG41', 0, 'role.emailValidation', 'u-reg-store','u-reg-store', 'STRING', false);
 
+-- APPLICATION -----------------------------------------------------------------
+INSERT INTO APPKY.AY_BARN_APP (C_GUID, C_OPLOCK, C_DATE, C_NAME, C_RELEASE) VALUES ('A1', 0, '2014-06-25 19:50:14.667', 'APPKY', '1.0.0');
+
 -- VIEW ------------------------------------------------------------------------
 -- View configuration
-INSERT INTO CORE_CONFIG (C_GUID, C_OPLOCK, C_CREATIONDATE, C_CREATIONUSER, C_MODIFICATIONDATE, C_MODIFICATIONUSER, C_MODULE) VALUES ('view', 0, '2012-09-27 20:40:02.947', NULL, '2012-09-27 20:40:02.947', NULL, 'view');
--- Show public registration
-INSERT INTO CORE_CONFIG_PARAM (C_PARENT_GUID, C_GUID, C_OPLOCK, C_NAME, C_VALUE, C_DEFAULT, C_TYPE, C_EDIT) VALUES ('view', 'CONFIG60', 0, 'view.registration', 'true','true', 'BOOLEAN', true);
--- Show public forgot password
-INSERT INTO CORE_CONFIG_PARAM (C_PARENT_GUID, C_GUID, C_OPLOCK, C_NAME, C_VALUE, C_DEFAULT, C_TYPE, C_EDIT) VALUES ('view', 'CONFIG63', 0, 'view.forgotPassword', 'true','true', 'BOOLEAN', true);
+INSERT INTO APPKY.AY_BARN_CONF (C_GUID, C_OPLOCK, C_TYPE, C_APP) VALUES ('C1', 0, 'org.lorislab.appky.process.config.ViewConfiguration', 'A1');
+INSERT INTO APPKY.AY_BARN_ATTR (C_GUID, C_OPLOCK, C_NAME, C_VALUE, C_CONFIG) VALUES ('AT1', 0, 'publicRegistration', 'false', 'C1');
+INSERT INTO APPKY.AY_BARN_ATTR (C_GUID, C_OPLOCK, C_NAME, C_VALUE, C_CONFIG) VALUES ('AT2', 0, 'forgotPublic', 'false', 'C2');

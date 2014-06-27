@@ -15,19 +15,13 @@
  */
 package org.lorislab.appky.process.config;
 
-import java.io.Serializable;
-
 /**
  * The process configuration.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ProcessApplicationConfiguration implements Serializable {
+public class ProcessApplicationConfiguration {
 
-    /**
-     * The UID for this class.
-     */
-    private static final long serialVersionUID = -966352466111631332L;
     /**
      * The template for the application update email.
      */

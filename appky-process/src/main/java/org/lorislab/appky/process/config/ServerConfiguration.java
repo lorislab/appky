@@ -15,7 +15,6 @@
  */
 package org.lorislab.appky.process.config;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -25,12 +24,7 @@ import java.util.Locale;
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ServerConfiguration implements Serializable {
-
-    /**
-     * The UID for this class.
-     */
-    private static final long serialVersionUID = 5240550628044434862L;
+public class ServerConfiguration {
 
     /**
      * The list of server languages key.

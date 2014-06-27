@@ -15,19 +15,13 @@
  */
 package org.lorislab.appky.process.config;
 
-import java.io.Serializable;
-
 /**
  * The registration configuration model.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ProcessRegistrationConfiguration implements Serializable {
+public class ProcessRegistrationConfiguration {
 
-    /**
-     * The UID for this class.
-     */
-    private static final long serialVersionUID = 2499400874836753916L;
     /**
      * The registration interval.
      */
