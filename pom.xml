@@ -55,7 +55,7 @@
 			<dependency>
 				<groupId>org.lorislab.jel</groupId>
 				<artifactId>jel-bom</artifactId>
-				<version>0.0.8-SNAPSHOT</version>
+				<version>0.0.8</version>
 				<type>pom</type>
 				<scope>import</scope>				
 			</dependency>	
@@ -64,7 +64,7 @@
 			<dependency>
 				<groupId>org.lorislab.barn</groupId>
 				<artifactId>barn-bom</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>0.0.1</version>
 				<type>pom</type>
 				<scope>import</scope>				
 			</dependency>
@@ -166,7 +166,7 @@
 				<plugin>
 					<groupId>org.lorislab.maven</groupId>
 					<artifactId>jboss-server-plugin</artifactId>
-					<version>1.0.2-SNAPSHOT</version>
+					<version>1.0.3</version>
 					<executions>
 						<execution>
 							<phase>install</phase>
@@ -186,7 +186,7 @@
 				<plugin>
 					<groupId>org.lorislab.maven</groupId>
 					<artifactId>messagebundles-plugin</artifactId>
-					<version>1.0.1</version>
+					<version>1.0.3</version>
 					<executions>
 						<execution>
 							<phase>compile</phase>
@@ -219,7 +219,7 @@
 				<plugin>
 					<groupId>org.lorislab.armonitor</groupId>
 					<artifactId>armonitor-maven-plugin</artifactId>
-					<version>${project.version}</version>
+					<version>0.0.2</version>
 					<executions>
 						<execution>
 							<phase>prepare-package</phase>

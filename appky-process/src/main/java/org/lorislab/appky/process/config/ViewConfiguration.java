@@ -15,20 +15,12 @@
  */
 package org.lorislab.appky.process.config;
 
-import java.io.Serializable;
-
-
 /**
  * The public login configuration.
  *
  * @author Andrej Petras <andrej@ajka-andrej.com>
  */
-public class ViewConfiguration implements Serializable {
-
-    /**
-     * The UID for this class.
-     */
-    private static final long serialVersionUID = 72168413623648302L;
+public class ViewConfiguration {
 
     /**
      * The registration public key.
